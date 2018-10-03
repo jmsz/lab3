@@ -197,10 +197,10 @@ def ImportData(filename):
 if __name__ == "__main__":
 
     # filename = 'data/co60.h5'
-    filename = 'data/DATA_co60_2.h5'
+    filename = 'data/cs137_co60.h5'
     raw_data = ImportData(filename)
     print('len ', len(raw_data))
-    sys.exit()
+    #sys.exit()
     sampling_time = 10.0
     n_data = 4096
     x_values = np.linspace(0, n_data, n_data)
@@ -245,7 +245,7 @@ if __name__ == "__main__":
     nbins = 2048
     #histrange = np.linspace(histrange[0], histrange[1], nbins)
     #bins = GetBinCentersFromEdges(histrange)
-    counts, bin_edges = np.histogram(nrgs, bins=2048) #, range=[1.4e8, 3.06e8])
+    counts, bin_edges = np.histogram(nrgs, bins=2048, range=[0.1e9,1e9]) #, range=[1.4e8, 3.06e8])
     bins = (bin_edges[1:]+bin_edges[:-1])/2
     #return bin_centers, counts
     plt.figure()
@@ -256,6 +256,7 @@ if __name__ == "__main__":
     plt.xlabel('channel')
     plt.savefig('cs_spectrum_pulser.pdf')
     plt.show()
+    sys.exit()
     numberofROIs = int(raw_input('how many ROIs?'))
     print (numberofROIs)
 
