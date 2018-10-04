@@ -194,10 +194,21 @@ def ImportData(filename):
     raw_data[mask] = 0
     return raw_data
 
+def fast_trapezoidal_filter(data, k, m, M=4400):
+    ndata = len(data)
+    l = 2*k+m
+    pad = np.pad(data, (l, 0), 'constant', constant_values=(0))
+    sum3 = pad[l:ndata+l] - pad[l-k-m:ndata+l-k-m] - pad[l-k:ndata+l-k] + pad[:ndata]
+    acc1 = np.cumsum(sum3)
+    sum4 = acc1 + sum3 * M
+    acc2 = np.cumsum(sum4)
+    return acc2
+
+
 if __name__ == "__main__":
 
     # filename = 'data/co60.h5'
-    filename = 'data/cs137_co60.h5'
+    filename = 'data/Cs_pulser_real.h5'
     raw_data = ImportData(filename)
     print('len ', len(raw_data))
     #sys.exit()
@@ -208,44 +219,47 @@ if __name__ == "__main__":
     peaking_time = 100 # peaking
     gap = 100 # gap
     raw_signal = raw_data[2,:]
-    M = find_M_value(raw_data, 100)
+    #M = find_M_value(raw_data, 100)
+    M = 4400
+    k = 100 # peaking time
+    m = 100 # gap
+
+
     print('M= ', M)
     print("RAW ", len(raw_signal))
     plt.plot(x_values, raw_signal)
-    signal = baseline_correction(raw_signal)
-    print(signal)
-    print(gap)
-    print(peaking_time)
-    signal = trapezoidal_filter(signal, gap, peaking_time)
-    plt.figure(41)
-    plt.cla()
-    plt.clf()
-    plt.plot(x_values, signal)
-    plt.show()
+    baseline = np.mean(raw_data[:,0:99],1).reshape((len(raw_data),1))
+    signals = raw_data[:,] - baseline
+    nrgs = np.apply_along_axis(fast_trapezoidal_filter, 1, signals , k, m, M)
+   # print(nrgs)
+    #signal = trapezoidal_filter(signal, gap, peaking_time)
+    #plt.figure(41)
+    #plt.cla()
+    #plt.clf()
+    #plt.plot(x_values, signal)
+    #plt.show()
 
-    energy = get_energy_value(signal)
-    print(energy)
+    #energy = get_energy_value(signal)
+    #print(energy)
 
-    nrgs = []
-    number_of_events = len(raw_data)
+    #nrgs = []
+    #number_of_events = len(raw_data)
     #number_of_events = 10000
-    assert number_of_events <= len(raw_data)
-    k = 100 # peaking time
-    l = 100 # gap
+    #assert number_of_events <= len(raw_data)
 
-    for i in range(0, number_of_events, 1):
-        signal = raw_data[i,:]
-        nrg = filter_and_get_energy(signal, l, k)
-        nrgs.append(round(nrg, 7))
+    #for i in range(0, number_of_events, 1):
+    #    signal = raw_data[i,:]
+    #    nrg = filter_and_get_energy(signal, l, k)
+    #    nrgs.append(round(nrg, 7))
 
-    print('max ', max(nrgs))
-    print('min ', min(nrgs))
+    #print('max ', max(nrgs))
+    #print('min ', min(nrgs))
 
     #histrange = [1.0e8, 3.5e8]
     nbins = 2048
     #histrange = np.linspace(histrange[0], histrange[1], nbins)
     #bins = GetBinCentersFromEdges(histrange)
-    counts, bin_edges = np.histogram(nrgs, bins=2048, range=[0.1e9,1e9]) #, range=[1.4e8, 3.06e8])
+    counts, bin_edges = np.histogram(nrgs, bins=2048, range=[0.25e7,0.5e7])  #, range=[1.4e8, 3.06e8])
     bins = (bin_edges[1:]+bin_edges[:-1])/2
     #return bin_centers, counts
     plt.figure()
