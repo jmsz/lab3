@@ -171,7 +171,8 @@ def find_M_value(signals): # use baseline corrected signal input
         x = np.asarray(range(np.argmax(signal),len(signal), 1))
         y = np.asarray(signal[np.argmax(signal):len(signal)])
         out = fit_exponential(x, y)
-        tau_values.append(out['exp_decay'].value)
+        if out['exp_decay'].value < 1e4 and out['exp_decay'].stderr < 100:
+            tau_values.append(out['exp_decay'].value)
     tau = np.mean(tau_values)
     return tau
 
@@ -233,8 +234,8 @@ def get_energy_resolution_cs_662(x, y):
     ROI_low = 0
     ROI_high =  int(2048/2)
     i = np.argmax(y[ROI_low:ROI_high])
-    ROI_low = i - 200
-    ROI_high =  i + 200
+    ROI_low = i - 100
+    ROI_high =  i + 100
     fwhm, center =  fit_gaussian_with_plot(x[ROI_low:ROI_high], y[ROI_low:ROI_high])
     return fwhm, center
 
@@ -242,8 +243,8 @@ def get_energy_resolution_cs_pulser(x, y):
     ROI_low = int(2048/2)
     ROI_high =  int(2048)
     i = np.argmax(y[ROI_low:ROI_high])
-    ROI_low = i - 200
-    ROI_high =  i + 200
+    ROI_low = i - 100
+    ROI_high =  i + 100
     fwhm, center =  fit_gaussian_with_plot(x[ROI_low:ROI_high], y[ROI_low:ROI_high])
     return fwhm, center
 
