@@ -17,9 +17,10 @@ def baseline_correction(data):
         data[i] = data[i] - baseline_correction_value
     return data
 
-def fast_baseline_correction(data):
-    baseline = np.mean(data[:len(data),0:99],1).reshape((len(data),1))
-    baseline_corrected = data[:len(data),] - baseline
+def fast_baseline_correction(data):  # for one signal
+    num=len(data)
+    baseline = np.mean(data[:num,0:99],1).reshape((num,1))
+    baseline_corrected = data[:num,] - baseline
     return(baseline_corrected)
 
 def test_baseline_correction():
@@ -124,12 +125,6 @@ def fit_exponential_with_plot(x, y):
     plt.show()
     return out.params
 
-@jit(parallel=True)
-def filter_and_get_energy(signal, peak, gap, M):
-    signal = baseline_correction(signal)
-    energy_value = fast_trapezoidal_filter_energy(signal, gap, peak, M)
-    return energy_value
-
 def fit_gaussian_with_plot(x, y):
     mod = lmfit.models.GaussianModel()
     pars = mod.guess(y, x=x)
@@ -228,12 +223,19 @@ def get_energy_resolution_co_1173(x, y):
     return fwhm, center
 
 def get_energy_resolution_co_1332(x, y):
-    #i = int(np.argmax(y))
-    #ROI_low = int(i + 100)
     ROI_low = int(2048 / 2)
     ROI_high =  2048
     fwhm, center =  fit_gaussian(x[ROI_low:ROI_high], y[ROI_low:ROI_high])
 
+    return fwhm, center
+
+def get_energy_resolution_cs_662(x, y):
+    ROI_low = 0
+    ROI_high =  int(2048 / 4)
+    i = np.argmax(y[ROI_low:ROI_high])
+    ROI_low = i - 200
+    ROI_high =  i + 200
+    fwhm, center =  fit_gaussian_with_plot(x[ROI_low:ROI_high], y[ROI_low:ROI_high])
     return fwhm, center
 
 def calibrate_co_spectrum(nrgs):# Get first calibration point, ROI HARDCODED
