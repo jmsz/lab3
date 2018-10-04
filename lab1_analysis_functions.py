@@ -231,7 +231,16 @@ def get_energy_resolution_co_1332(x, y):
 
 def get_energy_resolution_cs_662(x, y):
     ROI_low = 0
-    ROI_high =  int(2048 / 4)
+    ROI_high =  int(2048/2)
+    i = np.argmax(y[ROI_low:ROI_high])
+    ROI_low = i - 200
+    ROI_high =  i + 200
+    fwhm, center =  fit_gaussian_with_plot(x[ROI_low:ROI_high], y[ROI_low:ROI_high])
+    return fwhm, center
+
+def get_energy_resolution_cs_pulser(x, y):
+    ROI_low = int(2048/2)
+    ROI_high =  int(2048)
     i = np.argmax(y[ROI_low:ROI_high])
     ROI_low = i - 200
     ROI_high =  i + 200
