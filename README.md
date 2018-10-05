@@ -19,22 +19,22 @@ The analysis command does all of the parts of the analysis which can be demonstr
 ```
 make data
 ```
-3. run analysis:
+2. run analysis:
 ```
 make analysis
 ```
-4. run software test suite:
+3. run software test suite:
 ```
 make test
 ```
 ## How to compile report
 
-5. generate report:
+4. generate report:
 ```
 make
 ```
 ## How to clean
-6. clean:
+5. clean:
 ```
 make clean
 ```
