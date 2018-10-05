@@ -1,4 +1,4 @@
-# NE 204 Lab 0 ReadMe
+# NE 204 Lab 1 ReadMe
 
 This repo contains the necessary parts to perform the analysis and compile
 the write-up of Lab 1. Please use Python 2.7.
