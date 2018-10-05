@@ -152,8 +152,6 @@ k_fwhm_values = []
 k_fwhm_values_err = []
 k_fwhm_pulser_values = []
 k_values_ns = []
-m = 25
-
 nbins = 2048
 
 for k in k_values:
