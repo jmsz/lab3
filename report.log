@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  5 OCT 2018 01:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  5 OCT 2018 02:18
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -183,7 +183,11 @@ Package caption3 Info: TeX engine: e-TeX on input line 67.
 \sf@top=\skip49
 \sf@bottom=\skip50
 )
-(./report.aux)
+(./report.aux
+
+LaTeX Warning: Label `peak' multiply defined.
+
+)
 \openout1 = `report.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 26.
@@ -198,8 +202,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 26.
 LaTeX Font Info:    ... okay on input line 26.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 26.
 LaTeX Font Info:    ... okay on input line 26.
-
-(/usr/local/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+ (/usr/local/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count111
 \scratchdimen=\dimen130
@@ -304,14 +307,10 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 29.
 (/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-(./text/introduction.tex) (./text/methods.tex
+(./text/introduction.tex) (./text/methods.tex) [1
 
-LaTeX Warning: Citation `Knoll' on page 1 undefined on input line 7.
-
-) [1
-
-{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-(./text/results.tex
+{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (./text
+/results.tex
 <./figures/tenevents_rawdata.pdf, id=12, 433.62pt x 289.08pt>
 File: ./figures/tenevents_rawdata.pdf Graphic file (type pdf)
 
@@ -326,35 +325,78 @@ File: ./figures/tenevents_filtered.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./figures/tenevents_filtered.pdf used on input line 5.
 
 (pdftex.def)             Requested size: 199.16928pt x 132.7799pt.
- [2 <./figures/tenevents_rawdata.pdf> <./figures/tenevents_filtered.pdf
+
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 18.
+
+<./figures/gap_optimization_co.pdf, id=14, 433.62pt x 289.08pt>
+File: ./figures/gap_optimization_co.pdf Graphic file (type pdf)
+
+<use ./figures/gap_optimization_co.pdf>
+Package pdftex.def Info: ./figures/gap_optimization_co.pdf used on input line 2
+0.
+(pdftex.def)             Requested size: 346.89732pt x 231.27754pt.
+
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 27.
+
+<./figures/peak_optimization_co.pdf, id=15, 433.62pt x 289.08pt>
+File: ./figures/peak_optimization_co.pdf Graphic file (type pdf)
+
+<use ./figures/peak_optimization_co.pdf>
+Package pdftex.def Info: ./figures/peak_optimization_co.pdf used on input line 
+29.
+(pdftex.def)             Requested size: 346.89732pt x 231.27754pt.
+
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 36.
+
+<./figures/fwhm_vs_energy.pdf, id=16, 433.62pt x 289.08pt>
+File: ./figures/fwhm_vs_energy.pdf Graphic file (type pdf)
+
+<use ./figures/fwhm_vs_energy.pdf>
+Package pdftex.def Info: ./figures/fwhm_vs_energy.pdf used on input line 38.
+(pdftex.def)             Requested size: 346.89732pt x 231.27754pt.
+) [2 <./figures/tenevents_rawdata.pdf> <./figures/tenevents_filtered.pdf
 
 pdfTeX warning: pdflatex (file ./figures/tenevents_filtered.pdf): PDF inclusion
 : multiple pdfs with page group included in a single page
->] (./report.aux)
+>] [3 <./figures/gap_optimization_co.pdf> <./figures/peak_optimization_co.pdf
 
-LaTeX Warning: There were undefined references.
+pdfTeX warning: pdflatex (file ./figures/peak_optimization_co.pdf): PDF inclusi
+on: multiple pdfs with page group included in a single page
+>] (./text/discussion.tex) (./report.bbl [4 <./figures/fwhm_vs_energy.pdf>]
+Missing character: There is no ¶ in font cmr10!
+)
+[5] (./report.aux)
 
- ) ) 
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
 Here is how much of TeX's memory you used:
- 4106 strings out of 492995
- 61116 string characters out of 6132704
- 131679 words of memory out of 5000000
- 7599 multiletter control sequences out of 15000+600000
- 11344 words of font info for 43 fonts, out of 8000000 for 9000
+ 4134 strings out of 492995
+ 61752 string characters out of 6132704
+ 133753 words of memory out of 5000000
+ 7618 multiletter control sequences out of 15000+600000
+ 11382 words of font info for 43 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 44i,9n,49p,695b,367s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.p
-fb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pf
-b></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
-></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><
-/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></u
-sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr
-/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/lo
-cal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb>
-Output written on report.pdf (2 pages, 108083 bytes).
+ 44i,9n,49p,1051b,367s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
+></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
+</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></
+usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></us
+r/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/
+local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/loc
+al/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/
+texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/t
+exlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on report.pdf (5 pages, 163563 bytes).
 PDF statistics:
- 107 PDF objects out of 1000 (max. 8388607)
- 41 compressed objects within 1 object stream
+ 243 PDF objects out of 1000 (max. 8388607)
+ 67 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 26 words of extra memory for PDF output out of 10000 (max. 10000000)
 

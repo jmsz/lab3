@@ -285,9 +285,14 @@ def make_nrg_sample_file(nrgs, name):
     j = 0
     while j < num:
         for i in nrgs:
-            f.write(str(i) + ', ')
+            f.write(str(i) + '\n')
             j += 1
     f.close()
+
+def read_nrg_sample_file(name):
+    values = []
+    values = np.loadtxt(str(name), dtype='float', delimiter=' ')
+    return values
 
 def save_parameters(m, k, M):
     filename = '../figures/gap.dat'

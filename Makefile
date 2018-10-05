@@ -37,7 +37,6 @@ fullanalysis :
 clean :
 	rm -f *.md5 *.aux *.log *.bbl *.lof *.lot *.blg *.out *.toc *.run.xml *.bcf *.txt
 	rm -f text/*.aux
-	rm ./test/*.pdf
 	rm *.pdf
 	rm $(manuscript).pdf
 	rm scripts/*.pyc

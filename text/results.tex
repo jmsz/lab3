@@ -6,7 +6,6 @@
     \caption{In figure (a) 5 sample events are shown. In figure (b) are the five signals after the application of a trapezoidanl filter with a gap time and peaking time of 1 $\mu$s. Note that the time interval on both plots in in ADC samples, which are each 10 ns apart in time.}%
     \label{fig:signals}%
 \end{figure}
-\end{document}
 
 Five signals were chosen from the ${}^{137}{Cs}$ data set. The raw signals are plotted in \ref{fig:signals}, after a baseline correction. The resultant signals after usage of the trapezoidal filter with a gap time and peaking time of 1 $\mu$s are also plotted. The correlation between amplitudes can be seen. The signal in purple exhibits ideal behavior, with sharp edges and a flat top. This signal corresponds to the unfiltered signal with the fastest rise-time. All of the charge is collected quickly and the unfiltered signal more closely resembles an ideal step function. The red signal is of the same amplitude but has a longer rise time. As expected, the resultant trapezoid is less ideal, showing more curved corners and more variation in amplitude in the flat top region. These effects can lead to degraded energy resolution.
 
@@ -37,7 +36,7 @@ A plot of resolution as a function of gap time is shown in \ref{gap}.
 \begin{figure}[]
 \begin{centering}
 \includegraphics[width=0.8\textwidth]{fwhm_vs_energy.pdf}
-\caption{Energy resolution as a function of gamma energy is plotted.}
+\caption{Energy resolution as a function of gamma energy is plotted. Error bars account for fitting errors. These error bars are smaller than the markers and thus not visible.}
 \label{peak}
 \end{centering}
 \end{figure}
