@@ -184,7 +184,7 @@ def find_M_value(signals): # use baseline corrected signal input
     return tau
 
 def make_ten_event_file():
-    f = open('../data/tenevents.txt','w')
+    f = open('./data/tenevents.txt','w')
     for i in range(10):
         data = raw_data[i,:]
         for j in data:
@@ -193,7 +193,7 @@ def make_ten_event_file():
 
 def read_ten_event_file():
     events = np.zeros((10, 4096))
-    with open('../data/tenevents.txt') as csv_file:
+    with open('./data/tenevents.txt') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         i = 0
         for row in csv_reader:
@@ -295,28 +295,28 @@ def read_nrg_sample_file(name):
     return values
 
 def save_parameters(m, k, M):
-    filename = '../figures/gap.dat'
+    filename = './figures/gap.dat'
     f = open(filename,'w')
     f.write(str(m))
     f.close()
 
-    filename = '../figures/peak.dat'
+    filename = './figures/peak.dat'
     f = open(filename,'w')
     f.write(str(k))
     f.close()
 
-    filename = '../figures/decay.dat'
+    filename = './figures/decay.dat'
     f = open(filename,'w')
     f.write(str(M))
     f.close()
 
 def save_fano(f, err):
-    filename = '../figures/fano.dat'
+    filename = './figures/fano.dat'
     f = open(filename,'w')
     f.write(str(f))
     f.close()
 
-    filename = '../figures/fano_err.dat'
+    filename = './figures/fano_err.dat'
     f = open(filename,'w')
     f.write(str(err))
     f.close()

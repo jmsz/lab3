@@ -4,7 +4,7 @@
 # In[203]:
 
 
-get_ipython().magic(u'run ./lab1_analysis_functions.py')
+from lab1_analysis_functions import *
 
 
 # In[204]:
@@ -33,7 +33,7 @@ plt.xlim([950, 1020])
 plt.title('Raw Pulses')
 plt.ylabel('ADC value')
 plt.xlabel('sample')
-plt.savefig('../figures/tenevents_rawdata.pdf')
+plt.savefig('./figures/tenevents_rawdata.pdf')
 # plt.show()
 
 
@@ -53,16 +53,16 @@ plt.xlim([950, 1325])
 plt.title('Filtered Pulses')
 plt.ylabel('ADC value')
 plt.xlabel('sample')
-plt.savefig('../figures/tenevents_filtered.pdf')
+plt.savefig('./figures/tenevents_filtered.pdf')
 # plt.show()
 
 
 # In[207]:
 
 
-co_nrgs = read_nrg_sample_file('../data/co_energies.txt')
-cs_nrgs = read_nrg_sample_file('../data/cs_energies.txt')
-am_nrgs = read_nrg_sample_file('../data/am_energies.txt')
+co_nrgs = read_nrg_sample_file('./data/co_energies.txt')
+cs_nrgs = read_nrg_sample_file('./data/cs_energies.txt')
+am_nrgs = read_nrg_sample_file('./data/am_energies.txt')
 
 
 # In[208]:
@@ -100,7 +100,7 @@ pulser_err = []
 # AM-241
 am_counts, bin_edges = np.histogram(am_nrgs, bins=2048, range=[0, 400])
 am_bins = (bin_edges[1:]+bin_edges[:-1])/2 # bin centers from bin edges
-am_bins = am_bins[10:250] 
+am_bins = am_bins[10:250]
 am_counts = am_counts[10:250]
 peak_fwhm, peak_center ,err = fit_gaussian_peak_linear_background(am_bins, am_counts)
 fwhm_peak_values.append(round(peak_fwhm / peak_center, 7) * 100)
@@ -110,7 +110,7 @@ peak_err.append(err * 100 / peak_center)
 # AM-PULSER
 am_counts, bin_edges = np.histogram(am_nrgs, bins=2048, range=[0, 400])
 am_bins = (bin_edges[1:]+bin_edges[:-1])/2 # bin centers from bin edges
-am_bins = am_bins[1000:2000] 
+am_bins = am_bins[1000:2000]
 am_counts = am_counts[1000:2000]
 pulser_fwhm, pulser_center ,err = fit_gaussian_peak_linear_background(am_bins, am_counts)
 fwhm_pulser_values.append(round(pulser_fwhm / pulser_center, 7) * 100)
@@ -157,7 +157,7 @@ peak_err.append(err * 100/ peak_2_center)
 # CO-PULSER
 co_counts, bin_edges = np.histogram(co_nrgs, bins=2048, range=[512, 1024])
 co_bins = (bin_edges[1:]+bin_edges[:-1])/2 # bin centers from bin edges
-co_bins = co_bins[1800:] 
+co_bins = co_bins[1800:]
 co_counts = co_counts[1800:]
 pulser_fwhm, pulser_center,err = fit_gaussian_peak_linear_background(co_bins, co_counts)
 fwhm_pulser_values.append(round(pulser_fwhm / pulser_center, 7) * 100)
@@ -167,14 +167,14 @@ pulser_err.append(err * 100/ pulser_center)
 # In[214]:
 
 
-plt.figure(2)
+plt.figure(12)
 plt.plot(fwhm_peak_energies, fwhm_peak_values, 'ob')
 plt.errorbar(fwhm_peak_energies, fwhm_peak_values, yerr=peak_err, ecolor='b')
 plt.title('Resolution vs. Energy')
 plt.ylabel('fwhm (%)')
 plt.xlabel('energy (keV)')
-plt.savefig('../figures/fwhm_vs_energy.pdf')
-plt.show()
+plt.savefig('./figures/fwhm_vs_energy.pdf')
+#plt.show()
 
 
 # In[215]:
@@ -189,11 +189,11 @@ for i in range(0, len(fwhm_peak_energies), 1):
     fwhm =(fwhm_peak_values[i] / 100) # was a percent
     fwhm = fwhm - (fwhm_elec / 100)
     fwhm = fwhm * fwhm_peak_energies[i] #fwhm in kev
-    fano =fwhm * (1/2.35) * np.sqrt(1/(e*(2.9*10**(-3)))) 
+    fano =fwhm * (1/2.35) * np.sqrt(1/(e*(2.9*10**(-3))))
     fano = fano**2
     fano = round(fano, 3)
     fano_list.append(fano)
-    
+
 fano = round(np.mean(fano_list[1:]),3)
 print('average fano factor: ' + str( fano))
 print('list of fano factors: ' + str(fano_list[1:]))
@@ -206,7 +206,3 @@ print('ANALYSIS COMPLETE')
 
 
 # In[ ]:
-
-
-
-
