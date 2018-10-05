@@ -1,22 +1,7 @@
-Data was provided by Dr. Ross Barnowski and consisted of counts as a function of channel number for 5 different isotopes (${}^{137}$Cs, ${}^{241}$Am, ${}^{133}$Ba, ${}^{60}$Co, and ${}^{152}$Eu). Gamma-rays were measured with a coaxial HPGe detector. Values were digitized with a 13-bit resolution MCA, giving 8192 channels.
+A coaxial HPGe detector was used to collect spectroscopic data from calibration sources of various energies (${}^{241}$Am, ${}^{137}$Cs, ${}^{60}$Co). In addition to a gamma source, a pulser input was also injected into the preamplifier in each measurement to provide information about electronic noise. 
 
-Data was loaded and verified by comparing the md5 checksum provided for the data to that calculated locally.
-Two peaks were used to perform the energy calibration: 59.541 keV from ${}^{241}$Am, and 661.657 keV from ${}^{137}$Cs. A narrow region of interest containing each peak was selected through visual examination of the spectra. In this region the scipy.optimize.curve\_fit function was used to fit a gaussian function to the data. Initial fit parameters used were rough estimates determined through visual examination of the data. Figure \ref{AmCsFit} shows the data, initial guess, final fit, and centroid for the ${}^{241}$Am and ${}^{137}$Cs peaks used for the calibration.
+Signal digitization was done using a Struck Integrated Systems 3302 DAQ module. This module has an internal 100 MHz clock which was used for all of the measurements. For this work, preamplifier output pulses were fed directly to the DAQ module without additional processing. The preamplifier output pulses were digitized and used to perform this analysis.The trigger threshold value was set so that gamma-ray pulses of all of the energies of interest could be collected without excessive noise and without exceeding the voltage range of the DAQ.
 
-\begin{figure}
-\centering
-\begin{minipage}{.5\textwidth}
-  \centering
-  \includegraphics[width=1\linewidth]{AmFit.pdf}
-\end{minipage}%
-\begin{minipage}{.5\textwidth}
-  \centering
-  \includegraphics[width=1\linewidth]{CsFit.pdf}
-\end{minipage}
-\caption{This illustrates the gaussian peak fitting which was done for the two peaks of interest. On the left is that for ${}^{241}$Am, on the right that for ${}^{137}$Cs. In each plot, the data is shown with blue circles, the initial guess with green dashed lines, the final fit with a solid black line, and the extracted centroid with a vertical red line.}
-\label{AmCsFit}
-\end{figure}
+The SIS3302 module has signal shaping capabilities. There is an on-board 'slow' trapezoidal filter that can be used to collect spectroscopic information and a 'fast' trapezoidal filter used for event triggering. There is also an on-board 'fast' trapezoidal filter used for event triggering. The 'fast' filter was used to reject events with more than one trigger per event. Here that corresponds to a very small ($>1\%$) fraction of events.
 
-The centroids of the fit functions were extracted and used to find coefficients for a linear expression correlating channel number and energy.
-
-The energy calibration was then applied to the ${}^{133}$Ba, ${}^{60}$Co, and ${}^{152}$Eu data to calculate the energies of several peaks. A comparison of true and calculated energies is shown in the results section.
+Using the digital trapezoidal filter discussed above, spectroscopic information was extracted using variable gap and peaking times. At first, a peaking time of 500 ns was set and the gap time was varied from 1 to 1000 ns. Then, using the optimal gap time, peaking time was similarly varied from 100 ns to 20 $\mu$s. The amplitudes of the trapezoids were used to generate spectra. A region of interest was selected around each peak by visual inspection. Then the region was fit with a Gaussian function and a linear function. The FWHM of the Gaussian was extracted and used. Gamma energy values were taken from Table 12.1 in \cite{Knoll} .

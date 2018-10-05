@@ -1,35 +1,47 @@
-The energy calibration was found to be described by:
-\begin{equation}
-Energy = 0.28054 * Channel + 1.26366
-\end{equation}
+\begin{figure}%
+    \centering
+    \subfloat[]{{\includegraphics[width=7cm]{./figures/tenevents_rawdata.pdf} }}%
+    \quad
+    \subfloat[]{{\includegraphics[width=7cm]{./figures/tenevents_filtered.pdf} }}%
+    \caption{In figure (a) 5 sample events are shown. In figure (b) are the five signals after the application of a trapezoidanl filter with a gap time and peaking time of 1 $\mu$s. Note that the time interval on both plots in in ADC samples, which are each 10 ns apart in time.}%
+    \label{fig:signals}%
+\end{figure}
+\end{document}
 
-The true and calculated energies of ${}^{133}$Ba are compared in Table 1. The last column of the table shows the percent error in our calculated energies. A plot showing the calibrated spectrum with the calculated centroids is shown in Figure \ref{Ba133spectrum}. The centroids match well with the peaks.
+Five signals were chosen from the ${}^{137}{Cs}$ data set. The raw signals are plotted in \ref{fig:signals}, after a baseline correction. The resultant signals after usage of the trapezoidal filter with a gap time and peaking time of 1 $\mu$s are also plotted. The correlation between amplitudes can be seen. The signal in purple exhibits ideal behavior, with sharp edges and a flat top. This signal corresponds to the unfiltered signal with the fastest rise-time. All of the charge is collected quickly and the unfiltered signal more closely resembles an ideal step function. The red signal is of the same amplitude but has a longer rise time. As expected, the resultant trapezoid is less ideal, showing more curved corners and more variation in amplitude in the flat top region. These effects can lead to degraded energy resolution.
 
-\input{./images/Ba133_table.txt}
+If the gap time of a filter is too small, ballistic deficit can be seen. This happens when filter rise time and gap time are not large enough to allow full charge collection. Making the gap time longer negates this effect. However, making the gap time too long can give the filter worse noise performance. 
 
-\begin{figure}[h]
+In this implementation the effects of ballistic deficit on energy resolution can be seen. For small gap times, the peak position is shifted down in energy. Also, the peak is broader and tends to have low-energy tailing. Some of this is likely due to ballistic deficit. For gap times greater than a certain amount ($\approx$)250 ns, no significant variation in energy resolution with increasing gap time was observed. This value corresponds roughly to the largest transit time for charge carriers expected in a small coaxial HPGe detector (on the order of hundreds of ns \cite{Knoll} ), as expected.
+
+A plot of resolution as a function of gap time is shown in \ref{gap}.
+
+\begin{figure}[]
 \begin{centering}
-\includegraphics[width=0.8\textwidth]{CalibratedBa133.pdf}
-\caption{A calibrated spectrum for ${}^{133}$Ba}
-\label{Ba133spectrum}
+\includegraphics[width=0.8\textwidth]{gap_optimization_co.pdf}
+\caption{Energy resolution as a function of gap time for the 1173 keV peak in ${}^{60}$Co. The peaking time was kept fixed at 500 ns. The errors shown only account for fitting errors.}
+\label{gap}
 \end{centering}
 \end{figure}
 \vspace{5mm}
 
-The same analysis was done for ${}^{60}$Co and ${}^{152}$Eu. The relevant values and in Table 2 and Table 3. The percent error is small and does not appear to be energy-dependent. Thus, the energy calibration works well for the peaks studied here. The calibrated spectra for these two isotopes are shown below in Figure \ref{Co60spectrum} and Figure \ref{Eu152spectrum}. The centroids of the studied peaks are indicated with red lines.
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.8\textwidth]{CalibratedCo60.pdf}
-\caption{A calibrated spectrum for ${}^{60}$Co}
-\label{Co60spectrum}
-\vspace{-4.5mm}
+\begin{figure}[]
+\begin{centering}
+\includegraphics[width=0.8\textwidth]{peak_optimization_co.pdf}
+\caption{Energy resolution as a function of peaking time for the 1173 keV peak in ${}^{60}$Co. The gap time was kept fixed at 450 ns. The errors shown only account for fitting errors.}
+\label{peak}
+\end{centering}
 \end{figure}
+\vspace{5mm}
 
-\begin{figure}
-\centering
-\includegraphics[width=0.8\textwidth]{CalibratedEu152.pdf}
-\caption{A calibrated spectrum for ${}^{152}$Eu}
-\label{Eu152spectrum}
-\vspace{-5.0mm}
+\begin{figure}[]
+\begin{centering}
+\includegraphics[width=0.8\textwidth]{fwhm_vs_energy.pdf}
+\caption{Energy resolution as a function of gamma energy is plotted.}
+\label{peak}
+\end{centering}
 \end{figure}
+\vspace{5mm}
+
+If the gap time of a filter is too small, ballistic deficit can be seen. This happens when filter rise time and gap time are not large enough to allow full charge collection. Making the gap time longer negates this effect. However, making the gap time too long can give the filter worse noise performance. 
+If the gap time of a filter is too small, ballistic deficit can be seen. This happens when filter rise time and gap time are not large enough to allow full charge collection. Making the gap time longer negates this effect. However, making the gap time too long can give the filter worse noise performance. 

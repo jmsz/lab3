@@ -2,7 +2,7 @@ manuscript = report
 latexopt = -file-line-error -halt-on-error
 
 # Build the PDF of the lab report from the source files
-$(manuscript).pdf: $(manuscript).tex text/*.tex references.bib images/*.pdf
+$(manuscript).pdf: $(manuscript).tex text/*.tex references.bib figures/*
 	pdflatex $(latexopt) $(manuscript).tex
 	bibtex $(manuscript).aux
 	bibtex $(manuscript).aux
@@ -11,26 +11,34 @@ $(manuscript).pdf: $(manuscript).tex text/*.tex references.bib images/*.pdf
 
 # Get/download necessary data
 data :
-	curl -L -o lab0_spectral_data.txt "https://www.dropbox.com/s/hutmwip3681xlup/lab0_spectral_data.txt?dl=0"
-
-# Validate that downloaded data is not corrupted
-validate :
-	curl -L -o lab0_spectral_data.md5 "https://www.dropbox.com/s/amumdrm9zp1kn8d/lab0_spectral_data.md5?dl=0"
-	md5sum -c lab0_spectral_data.md5
+	curl -L -o ./data/tenevents.txt "https://www.dropbox.com/s/yk9cov2q74ib9fl/tenevents.txt?dl=0"
+	curl -L -o ./data/cs_energies.txt "https://www.dropbox.com/s/wqcxnjptgj6x7om/cs_energies.txt?dl=0"
+	curl -L -o ./data/co_energies.txt "https://www.dropbox.com/s/njszde9miwqfby9/co_energies.txt?dl=0"
+	curl -L -o ./data/am_energies.txt "https://www.dropbox.com/s/e3sqk1pwqrpvld1/am_energies.txt?dl=0"
 
 # Run tests on analysis scripts
 test :
-	python test/test_lab0analysis.py
-	#nosetests --no-byte-compile test/*
+	cd ./scripts
+	python lab1_analysis_test.py
+	cd ..
 
-# Automate running the analysis scripts
+# Automate running of sample parts of the analysis.
 analysis :
-	python scripts/lab0analysis.py
+	cd ./scripts
+	python scripts/lab1_analysis_sample.py
+	cd ..
 
+# Automate running the full analysis.
+fullanalysis :
+	cd ./scripts
+	python scripts/lab1_analysis.py
+	cd ..
+	
 clean :
 	rm -f *.md5 *.aux *.log *.bbl *.lof *.lot *.blg *.out *.toc *.run.xml *.bcf *.txt
 	rm -f text/*.aux
 	rm ./test/*.pdf
+	rm *.pdf
 	rm $(manuscript).pdf
 	rm scripts/*.pyc
 
