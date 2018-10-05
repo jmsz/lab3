@@ -4,37 +4,21 @@
 # In[1]:
 
 
-### fix how M values is taken in
-### Switch to Jupyter Notebook
-### Import Data
-### Make a special data file with only 10 events or so
-### Plot the raw signals from those 10 events
-### Plot resulting Trapezoids
-#XX figure out calibration
-#XX Plot the full, calibrated energy spectra for Co, Cs, Am (to check for re-takes)
-### Fit peaks and get FWHM Values
-### Plot FWHM vs gap time
-### Plot FWHM vs peak time
-### Set optimal peak and gap times and save spectrum
-### Make electronic noise plot
-# noise contributions fitting/ modeling
-# calculate FANO factor
-# Write text
+# Edit text
 # Write TEST functions
-# check fano calc and check fano in knoll. ~0.12
-# MAKE SHORTER NOTEBOOK FOR SAMPLE
+# fix sample notebook
+# AM TEXT FILE IS ACTUALLY CO
+# make py files and remove the plt.show commands
+# upload real data files and fix links in makefile
 
-# CITE LMFIT
-# ADD PRECISE ENERGIES AND CITE NNDC
 
-
-# In[55]:
+# In[5]:
 
 
 get_ipython().magic(u'run ./lab1_analysis_functions.py')
 
 
-# In[3]:
+# In[6]:
 
 
 tenevents = read_ten_event_file()
@@ -43,7 +27,7 @@ M = find_M_value(tenevents)
 print('M ', M)
 
 
-# In[4]:
+# In[7]:
 
 
 tenevents = read_ten_event_file()
@@ -61,7 +45,7 @@ plt.title('Raw Pulses')
 plt.ylabel('ADC value')
 plt.xlabel('sample')
 plt.savefig('../figures/tenevents_rawdata.pdf')
-# plt.show()
+plt.show()
 
 k = 100
 m = 100
@@ -77,7 +61,7 @@ plt.title('Filtered Pulses')
 plt.ylabel('ADC value')
 plt.xlabel('sample')
 plt.savefig('../figures/tenevents_filtered.pdf')
-# plt.show()
+plt.show()
 
 
 # In[5]:
@@ -96,30 +80,30 @@ co_raw_data = import_data(filename)
 # In[6]:
 
 
-co_baseline = np.mean(co_raw_data[:len(co_raw_data),0:799],1).reshape((len(co_raw_data),1))
-co_baseline_corrected_signals = co_raw_data[:len(co_raw_data),] - co_baseline
+cs_baseline = np.mean(cs_raw_data[:len(cs_raw_data),0:799],1).reshape((len(cs_raw_data),1))
+cs_baseline_corrected_signals = cs_raw_data[:len(cs_raw_data),] - cs_baseline
 
 
-# In[10]:
+# In[7]:
 
 
-# M = find_M_value(cs_baseline_corrected_signals[0:len(co_raw_data)])
+# M = find_M_value(cs_baseline_corrected_signals[0:len(cs_raw_data)])
 M = 5920.5649833
 optimal_M = M
 print('optimal M: ', M)
 
 
-# In[11]:
+# In[9]:
 
 
 # OPTIMIZE GAP TIME
 
-m_values = np.linspace(0, 100, 20)
+m_values = np.linspace(0, 100, 30)
 k = 100
 
-number_of_events = len(co_raw_data)
-# number_of_events = 10000
-assert number_of_events <= len(co_raw_data)
+number_of_events = len(cs_raw_data)
+#number_of_events = 10000
+assert number_of_events <= len(cs_raw_data)
 ndata = 4096
 
 m_fwhm_values = []
@@ -130,25 +114,17 @@ for m in m_values:
     m = int(m)
     m_values_ns.append(m * 10)
     
-    co_nrgs=[]
-    co_nrgs = np.apply_along_axis(fast_trapezoidal_filter_energy, 1, co_baseline_corrected_signals, k, m, M)
+    cs_nrgs=[]
+    cs_nrgs = np.apply_along_axis(fast_trapezoidal_filter_energy, 1, cs_baseline_corrected_signals, k, m, M)
     nbins = 2048
-    co_counts, bin_edges = np.histogram(co_nrgs, bins=2048, range=[0, 2048]) #, range=Cs_range) # WORKS
-    co_bins = (bin_edges[1:]+bin_edges[:-1])/2 # bin centers from bin edges
-    co_fwhm, co_center, err = fit_gaussian_peak_linear_background(co_bins[550:690], co_counts[550:690])
-    m_fwhm_values_err.append(err)
-    m_fwhm_values.append(round(co_fwhm / co_center, 7) * 100)
+    cs_counts, bin_edges = np.histogram(cs_nrgs, bins=2048, range=[0,512]) #, range=Cs_range) # WORKS
+    cs_bins = (bin_edges[1:]+bin_edges[:-1])/2 # bin centers from bin edges
+    cs_fwhm, cs_center, err = fit_gaussian_peak_linear_background(cs_bins[1000:2000], cs_counts[1000:2000])
+    m_fwhm_values_err.append(err* 100 / cs_center)
+    m_fwhm_values.append(round(cs_fwhm / cs_center, 7) * 100)
 
 
-# In[12]:
-
-
-optimal_gap_time =  int(m_values_ns[np.argmin(m_fwhm_values)]) / 10
-m = optimal_gap_time 
-print('optimal gap time: ' + str(m * 10))
-
-
-# In[13]:
+# In[10]:
 
 
 plt.figure()
@@ -159,18 +135,11 @@ plt.ylabel('fwhm (%)')
 plt.errorbar(m_values_ns, m_fwhm_values, yerr=m_fwhm_values_err, ecolor='b')
 plt.plot(m_values_ns, m_fwhm_values, 'o-b')
 plt.title('Gap vs Energy Resolution')
-plt.savefig('../figures/gap_optimization_co.pdf')
-# plt.show()
-
-plt.figure()
-plt.cla()
-plt.clf()
-m_diff_list = abs(np.diff(m_fwhm_values))
-plt.plot(m_values_ns[0:-1], m_diff_list, '-')
-# plt.show()
+plt.savefig('../figures/gap_optimization_cs.pdf')
+plt.show()
 
 
-# In[14]:
+# In[11]:
 
 
 optimal_gap_time =  int(m_values_ns[np.argmin(m_fwhm_values)]) / 10
@@ -178,19 +147,20 @@ m = optimal_gap_time
 print('optimal gap time: ' + str(m * 10))
 
 
-# In[15]:
+# In[12]:
 
 
 # OPTIMIZE PEAKING TIME
 
-k_values = np.logspace(np.log10(10), np.log10(2000), 30, endpoint=True, base=10)
-number_of_events = len(co_raw_data)
-assert number_of_events <= len(co_raw_data)
+k_values = np.logspace(np.log10(10), np.log10(2000), 50, endpoint=True, base=10)
+number_of_events = len(cs_raw_data)
+assert number_of_events <= len(cs_raw_data)
 
 k_fwhm_values = []
 k_fwhm_values_err = []
 k_fwhm_pulser_values = []
 k_values_ns = []
+m = 25
 
 nbins = 2048
 
@@ -198,17 +168,22 @@ for k in k_values:
     k = int(k)
     k_values_ns.append(k * 10)
     
-    co_nrgs=[]
-    co_nrgs = np.apply_along_axis(fast_trapezoidal_filter_energy, 1, co_baseline_corrected_signals, k, m, M)
-    co_counts, bin_edges = np.histogram(co_nrgs, bins=2048, range=[0, 1024]) #Cs_range) # WORKS
-    co_bins = (bin_edges[1:]+bin_edges[:-1])/2 # bin centers from bin edges
+    cs_nrgs=[]
+    cs_nrgs = np.apply_along_axis(fast_trapezoidal_filter_energy, 1, cs_baseline_corrected_signals, k, m, M)
     
-    peak_fwhm, peak_center, err =fit_gaussian_peak_linear_background(co_bins[1200:1450], co_counts[1200:1450]) #, max(cs_counts), np.argmax(cs_counts), 1)
-    k_fwhm_values.append(round(peak_fwhm / peak_center, 7) * 100)
-    k_fwhm_values_err.append(err)
+    cs_counts, bin_edges = np.histogram(cs_nrgs, bins=2048, range=[0,512])
+    cs_bins = (bin_edges[1:]+bin_edges[:-1])/2 # bin centers from bin edges
+    cs_bins = cs_bins[1000:2000]
+    cs_counts = cs_counts[1000:2000]
+   # plt.plot(cs_bins, cs_counts)
+   # plt.show()
+    cs_peak_fwhm, cs_peak_center, err = fit_gaussian_peak_linear_background(cs_bins, cs_counts)
+
+    k_fwhm_values.append(round(cs_peak_fwhm / cs_peak_center, 7) * 100)
+    k_fwhm_values_err.append(err * 100 / cs_peak_center)
 
 
-# In[16]:
+# In[14]:
 
 
 plt.figure()
@@ -216,23 +191,23 @@ plt.cla()
 plt.clf()
 plt.xlabel('peaking time (ns)')
 plt.ylabel('fwhm (%)')
-plt.errorbar(k_values_ns, k_fwhm_values, yerr=k_fwhm_values_err, ecolor='b')
 plt.loglog(k_values_ns, k_fwhm_values, 'o-b')
+plt.errorbar(k_values_ns, k_fwhm_values, yerr=k_fwhm_values_err, ecolor='b')
 plt.title('Peaking Time vs Energy Resolution')
-plt.savefig('../figures/peak_optimization_co.pdf')
-# plt.show()
+plt.tick_params(axis='y', which='minor')
+plt.savefig('../figures/peak_optimization_cs.pdf')
+plt.show()
 
 
-# In[17]:
+# In[15]:
 
 
 optimal_peaking_time = k_values_ns[np.argmin(k_fwhm_values)] / 10
-# k = 50
 k = optimal_peaking_time
-print('optimal peaking time: ', k)
+print('optimal peaking time:' + str(k * 10))
 
 
-# In[21]:
+# In[16]:
 
 
 # Final Filter Paramters
@@ -245,7 +220,7 @@ print("===========================================")
 save_parameters(m * 10 , k * 10 , M / 10)
 
 
-# In[22]:
+# In[17]:
 
 
 cs_baseline = np.mean(cs_raw_data[:len(cs_raw_data),0:799],1).reshape((len(cs_raw_data),1))
@@ -254,29 +229,23 @@ cs_baseline_corrected_signals = cs_raw_data[:len(cs_raw_data),] - cs_baseline
 am_baseline = np.mean(am_raw_data[:len(am_raw_data),0:799],1).reshape((len(am_raw_data),1))
 am_baseline_corrected_signals = am_raw_data[:len(am_raw_data),] - am_baseline
 
-# co_baseline = np.mean(co_raw_data[:len(co_raw_data),0:799],1).reshape((len(co_raw_data),1))
-# co_baseline_corrected_signals = co_raw_data[:len(co_raw_data),] - co_baseline
+co_baseline = np.mean(co_raw_data[:len(co_raw_data),0:799],1).reshape((len(co_raw_data),1))
+co_baseline_corrected_signals = co_raw_data[:len(co_raw_data),] - co_baseline
 
 cs_nrgs = np.apply_along_axis(fast_trapezoidal_filter_energy, 1, cs_baseline_corrected_signals, k, m, M)
 co_nrgs = np.apply_along_axis(fast_trapezoidal_filter_energy, 1, co_baseline_corrected_signals, k, m, M)
 am_nrgs = np.apply_along_axis(fast_trapezoidal_filter_energy, 1, am_baseline_corrected_signals, k, m, M)
 
 
-# In[59]:
-
-
-get_ipython().magic(u'run ./lab1_analysis_functions.py')
-
-
-# In[60]:
+# In[18]:
 
 
 make_nrg_sample_file(co_nrgs[0:len(co_nrgs)], '../data/co_energies.txt')
-make_nrg_sample_file(co_nrgs[0:len(cs_nrgs)], '../data/cs_energies.txt')
-make_nrg_sample_file(co_nrgs[0:len(am_nrgs)], '../data/am_energies.txt')
+make_nrg_sample_file(cs_nrgs[0:len(cs_nrgs)], '../data/cs_energies.txt')
+make_nrg_sample_file(am_nrgs[0:len(am_nrgs)], '../data/am_energies.txt')
 
 
-# In[40]:
+# In[19]:
 
 
 # GET ENERGY RESOLUTION FOR DIFFERENT PEAKS
@@ -295,7 +264,7 @@ am_counts = am_counts[10:250]
 peak_fwhm, peak_center ,err = fit_gaussian_peak_linear_background(am_bins, am_counts)
 fwhm_peak_values.append(round(peak_fwhm / peak_center, 7) * 100)
 fwhm_peak_energies.append(59.536)
-peak_err.append(err)
+peak_err.append(err * 100 / peak_center)
 
 # AM-PULSER
 
@@ -305,7 +274,7 @@ am_bins = am_bins[1000:2000]
 am_counts = am_counts[1000:2000]
 pulser_fwhm, pulser_center ,err = fit_gaussian_peak_linear_background(am_bins, am_counts)
 fwhm_pulser_values.append(round(pulser_fwhm / pulser_center, 7) * 100)
-pulser_err.append(err)
+pulser_err.append(err* 100 / pulser_center)
 
 # CS-662
 cs_counts, bin_edges = np.histogram(cs_nrgs, bins=2048, range=[0, 512])
@@ -316,7 +285,7 @@ cs_peak_fwhm, cs_peak_center, err = fit_gaussian_peak_linear_background(cs_bins,
 
 fwhm_peak_values.append(round(cs_peak_fwhm / cs_peak_center, 7) * 100)
 fwhm_peak_energies.append(661.615)
-peak_err.append(err)
+peak_err.append(err* 100 / cs_peak_center)
 
 # CS-PULSER
 cs_counts, bin_edges = np.histogram(cs_nrgs, bins=2048, range=[900, 900+512])
@@ -355,13 +324,7 @@ fwhm_pulser_values.append(round(pulser_fwhm / pulser_center, 7) * 100)
 pulser_err.append(err * 100/ pulser_center)
 
 
-# In[38]:
-
-
-get_ipython().magic(u'run ./lab1_analysis_functions.py')
-
-
-# In[47]:
+# In[20]:
 
 
 plt.plot(fwhm_peak_energies, fwhm_peak_values, 'ob')
@@ -370,16 +333,16 @@ plt.title('Resolution vs. Energy')
 plt.ylabel('fwhm (%)')
 plt.xlabel('energy (keV)')
 plt.savefig('../figures/fwhm_vs_energy.pdf')
-# plt.show()
+plt.show()
 
 
-# In[54]:
+# In[27]:
 
 
 # find fano factor
 
 fano_list = []
-fwhm_elec = np.mean(fwhm_pulser_values[-2:-1]) # Am-241 pulser value is very differnet. Shouldn't depend on energy. Ignore for now.
+fwhm_elec = np.mean(fwhm_pulser_values) # Am-241 pulser value is very differnet. Shouldn't depend on energy. Ignore for now.
 for i in range(0, len(fwhm_peak_energies), 1):
     e = fwhm_peak_energies[i]
     fwhm =(fwhm_peak_values[i] / 100) # was a percent
@@ -391,17 +354,24 @@ for i in range(0, len(fwhm_peak_energies), 1):
     fano_list.append(fano)
     
 fano = round(np.mean(fano_list[1:]),3)
-print('average fano factor: ', fano)
-print(fano_list)
+print('average fano factor: ' + str( fano))
+print('list of fano factors: ' + str(fano_list[1:]))
 
-pulser_err=np.mean(pulser_err)
-peak_err=np.mean(peak_err)
-err_tot = np.sqrt((pulser_err/100)**2 + (peak_err/100)**2)
-save_fano(fano, err)
+
+# In[22]:
+
+
+print('ANALYSIS COMPLETE')
 
 
 # In[ ]:
 
 
-print('ANALYSIS COMPLETE')
+
+
+
+# In[ ]:
+
+
+
 

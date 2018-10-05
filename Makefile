@@ -12,28 +12,21 @@ $(manuscript).pdf: $(manuscript).tex text/*.tex references.bib figures/*
 # Get/download necessary data
 data :
 	curl -L -o ./data/tenevents.txt "https://www.dropbox.com/s/yk9cov2q74ib9fl/tenevents.txt?dl=0"
-	curl -L -o ./data/cs_energies.txt "https://www.dropbox.com/s/wqcxnjptgj6x7om/cs_energies.txt?dl=0"
-	curl -L -o ./data/co_energies.txt "https://www.dropbox.com/s/njszde9miwqfby9/co_energies.txt?dl=0"
-	curl -L -o ./data/am_energies.txt "https://www.dropbox.com/s/e3sqk1pwqrpvld1/am_energies.txt?dl=0"
-
+	curl -L -o ./data/cs_energies.txt "https://www.dropbox.com/s/yxm9lbnailhhdao/cs_energies.txt?dl=0"
+	curl -L -o ./data/co_energies.txt "https://www.dropbox.com/s/99cfeid7nto0k35/co_energies.txt?dl=0"
+	curl -L -o ./data/am_energies.txt "https://www.dropbox.com/s/glh5hohb924bfey/am_energies.txt?dl=0"
 # Run tests on analysis scripts
 test :
-	cd ./scripts
-	python lab1_analysis_test.py
-	cd ..
+	python ./scripts/test.py
 
 # Automate running of sample parts of the analysis.
 analysis :
-	cd ./scripts
-	python scripts/lab1_analysis_sample.py
-	cd ..
+	python ./scripts/lab1_analysis_sample.py
 
 # Automate running the full analysis.
 fullanalysis :
-	cd ./scripts
-	python scripts/lab1_analysis.py
-	cd ..
-	
+	python ./scripts/lab1_analysis.py
+
 clean :
 	rm -f *.md5 *.aux *.log *.bbl *.lof *.lot *.blg *.out *.toc *.run.xml *.bcf *.txt
 	rm -f text/*.aux

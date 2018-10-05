@@ -1,13 +1,13 @@
 
 # coding: utf-8
 
-# In[64]:
+# In[203]:
 
 
 get_ipython().magic(u'run ./lab1_analysis_functions.py')
 
 
-# In[4]:
+# In[204]:
 
 
 tenevents = read_ten_event_file()
@@ -16,7 +16,7 @@ M = find_M_value(tenevents)
 print('M ', M)
 
 
-# In[9]:
+# In[205]:
 
 
 tenevents = read_ten_event_file()
@@ -37,7 +37,7 @@ plt.savefig('../figures/tenevents_rawdata.pdf')
 # plt.show()
 
 
-# In[10]:
+# In[206]:
 
 
 k = 100 # 1 us
@@ -57,7 +57,7 @@ plt.savefig('../figures/tenevents_filtered.pdf')
 # plt.show()
 
 
-# In[68]:
+# In[207]:
 
 
 co_nrgs = read_nrg_sample_file('../data/co_energies.txt')
@@ -65,24 +65,15 @@ cs_nrgs = read_nrg_sample_file('../data/cs_energies.txt')
 am_nrgs = read_nrg_sample_file('../data/am_energies.txt')
 
 
-# In[12]:
+# In[208]:
 
 
-optimal_gap_time =  int(m_values_ns[np.argmin(m_fwhm_values)]) / 10
-m = optimal_gap_time 
-print('optimal gap time: ' + str(m * 10))
+m = 57
+k = 1127
+M = 5920.56
 
 
-# In[17]:
-
-
-optimal_peaking_time = k_values_ns[np.argmin(k_fwhm_values)] / 10
-# k = 50
-k = optimal_peaking_time
-print('optimal peaking time: ', k)
-
-
-# In[21]:
+# In[209]:
 
 
 # Final Filter Paramters
@@ -95,7 +86,7 @@ print("===========================================")
 save_parameters(m * 10 , k * 10 , M / 10)
 
 
-# In[76]:
+# In[210]:
 
 
 # GET ENERGY RESOLUTION FOR DIFFERENT PEAKS
@@ -111,27 +102,19 @@ am_counts, bin_edges = np.histogram(am_nrgs, bins=2048, range=[0, 400])
 am_bins = (bin_edges[1:]+bin_edges[:-1])/2 # bin centers from bin edges
 am_bins = am_bins[10:250] 
 am_counts = am_counts[10:250]
-
-plt.figure()
-plt.cla()
-plt.clf()
-plt.plot(am_bins, am_counts)
-plt.savefig('../figures/am_spectrum.pdf')
-
 peak_fwhm, peak_center ,err = fit_gaussian_peak_linear_background(am_bins, am_counts)
 fwhm_peak_values.append(round(peak_fwhm / peak_center, 7) * 100)
 fwhm_peak_energies.append(59.536)
-peak_err.append(err)
+peak_err.append(err * 100 / peak_center)
 
 # AM-PULSER
-
 am_counts, bin_edges = np.histogram(am_nrgs, bins=2048, range=[0, 400])
 am_bins = (bin_edges[1:]+bin_edges[:-1])/2 # bin centers from bin edges
 am_bins = am_bins[1000:2000] 
 am_counts = am_counts[1000:2000]
 pulser_fwhm, pulser_center ,err = fit_gaussian_peak_linear_background(am_bins, am_counts)
 fwhm_pulser_values.append(round(pulser_fwhm / pulser_center, 7) * 100)
-pulser_err.append(err)
+pulser_err.append(err* 100 / pulser_center)
 
 # CS-662
 cs_counts, bin_edges = np.histogram(cs_nrgs, bins=2048, range=[0, 512])
@@ -140,15 +123,9 @@ cs_bins = cs_bins[1000:2000]
 cs_counts = cs_counts[1000:2000]
 cs_peak_fwhm, cs_peak_center, err = fit_gaussian_peak_linear_background(cs_bins, cs_counts)
 
-plt.figure()
-plt.cla()
-plt.clf()
-plt.plot(cs_bins, cs_counts)
-plt.savefig('../figures/cs_spectrum.pdf')
-
 fwhm_peak_values.append(round(cs_peak_fwhm / cs_peak_center, 7) * 100)
 fwhm_peak_energies.append(661.615)
-peak_err.append(err)
+peak_err.append(err* 100 / cs_peak_center)
 
 # CS-PULSER
 cs_counts, bin_edges = np.histogram(cs_nrgs, bins=2048, range=[900, 900+512])
@@ -166,14 +143,6 @@ peak_1_fwhm, peak_1_center, err = fit_gaussian_peak_linear_background(co_bins[12
 fwhm_peak_values.append(round(peak_1_fwhm / peak_1_center, 7) * 100)
 fwhm_peak_energies.append(1173.231)
 peak_err.append(err * 100 / peak_1_center)
-
-plt.figure()
-plt.cla()
-plt.clf()
-plt.plot(cs_bins, cs_counts)
-plt.savefig('../figures/cs_spectrum.pdf')
-plt.cla()
-plt.clf()
 
 # CO-1332
 co_counts, bin_edges = np.histogram(co_nrgs, bins=2048, range=[0, 1024])
@@ -195,7 +164,7 @@ fwhm_pulser_values.append(round(pulser_fwhm / pulser_center, 7) * 100)
 pulser_err.append(err * 100/ pulser_center)
 
 
-# In[79]:
+# In[214]:
 
 
 plt.figure(2)
@@ -205,16 +174,16 @@ plt.title('Resolution vs. Energy')
 plt.ylabel('fwhm (%)')
 plt.xlabel('energy (keV)')
 plt.savefig('../figures/fwhm_vs_energy.pdf')
-# plt.show()
+plt.show()
 
 
-# In[80]:
+# In[215]:
 
 
 # find fano factor
 
 fano_list = []
-fwhm_elec = np.mean(fwhm_pulser_values[-2:-1]) # Am-241 pulser value is very differnet. Shouldn't depend on energy. Ignore for now.
+fwhm_elec = np.mean(fwhm_pulser_values) # Am-241 pulser value is very differnet. Shouldn't depend on energy. Ignore for now.
 for i in range(0, len(fwhm_peak_energies), 1):
     e = fwhm_peak_energies[i]
     fwhm =(fwhm_peak_values[i] / 100) # was a percent
@@ -226,17 +195,18 @@ for i in range(0, len(fwhm_peak_energies), 1):
     fano_list.append(fano)
     
 fano = round(np.mean(fano_list[1:]),3)
-print('average fano factor: ', fano)
-print(fano_list)
+print('average fano factor: ' + str( fano))
+print('list of fano factors: ' + str(fano_list[1:]))
 
-pulser_err=np.mean(pulser_err)
-peak_err=np.mean(peak_err)
-err_tot = np.sqrt((pulser_err/100)**2 + (peak_err/100)**2)
-save_fano(fano, err)
+
+# In[216]:
+
+
+print('ANALYSIS COMPLETE')
 
 
 # In[ ]:
 
 
-print('ANALYSIS COMPLETE')
+
 
