@@ -16,3 +16,167 @@ To optimize parameters, the 662 keV peak from $^{137}$Cs was used, since it is r
 
 Using the optimal parameters for $^{137}$Cs (a gap time of 550 ns and a peaking time of 11.64 $\mu$s) the energy resolution of the system as a function of gamma energy was studied.
 
+oisson's equation in cylindrical coordinates can be written in the following way:
+
+\begin{align}\label{eq:maxwell}
+\nabla ^2\phi = \left( {\underbrace {\frac{\partial ^2\phi
+}{\partial r^2} + \frac{1}{r}\frac{\partial \phi }{\partial
+r}}_{\frac{1}{r}\frac{\partial \phi }{\partial r}\left(
+{r\frac{\partial \phi }{\partial r}} \right)} +
+\frac{1}{r^2}\frac{\partial ^2\phi }{\partial \theta ^2} +
+\frac{\partial ^2\phi }{\partial z^2}} \right) = -\frac{\rho}{\varepsilon_\mathrm{o}}
+\end{align}
+
+\noindent where $\phi$ is the potential and $\rho$ is the total space charge density, which will be taken as a constant. For a cylindrically symmetric configuration, the azimuthal partial derivative term can be taken as zero. For a tractable closed form solution of the electric field inside the coaxial HPGe detector, it is necessary to ignore the end cap region. The electric field flux near the corners in particular will lead to irregular pulse signals and so in this analysis will be ignored. In the regions away from the end, this allows the z term to be dropped as well. Equation \ref{eq:maxwell} now becomes:
+\begin{align}\label{eq:maxsimplified}
+\frac{\partial ^2\phi
+}{\partial r^2} + \frac{1}{r}\frac{\partial \phi }{\partial
+r} = -\frac{\rho}{\varepsilon}
+\end{align}
+\indent Since there is only an r dependence, the electric field is also only in the radial direction or E(r) = $-\partial\phi/\partial r$. This turns equation \ref{eq:maxsimplified} into the following form:
+\begin{align}
+\nabla_{r} \cdot \vec{\mathrm{E}}\mathrm{(r)} = \frac{\partial \mathrm{E(r)}
+}{\partial r} + \frac{\mathrm{E(r)}}{r} = \frac{\rho}{\varepsilon}
+\end{align}
+
+For a fully depleted HPGe coaxial detector with the added boundary condition that the the voltage between the inner and outer radius is the applied voltage, it can be shown that:
+
+\begin{align}
+|E(r)| &= -\frac{\rho}{2\varepsilon}r + \frac{V - V_{D}}{r \mathrm{ln}\left(\frac{b}{a}\right)}\\
+V_{D} &= \frac{\rho (b^{2} - a^{2})}{4 \varepsilon} \nonumber
+\end{align}
+
+Where b is the outer radius, a is the inner radius, and $V_{D}$ is the depletion voltage.
+\subsection*{Shockley-Ramo Approximation: Ignore All Space Charge}
+Applying the Shockley-Ramo theorem \cite{ramo,Shockley}, the space charge $\rho$ is set equal to zero and the applied voltage V is set to unity. This gives for the weighting field:
+
+\begin{align}
+    |E_{w}(r)| = \frac{1}{r\mathrm{ln}\left(\frac{b}{a}\right)}
+\end{align}
+
+The induced current on the electrodes become:
+
+\begin{align}
+    i = q E \cdot \vec{v} = q E_{v} v
+\end{align}
+
+Where q is the charge and $E_{v}$ is the component of the electric field in the direction of the instantaneous velocity v of an electron. It is assumed that the applied potential is strong enough to make diffusion effects negligible and constrain the paths of the formed electrons and holes to radial lines. Since there are only two conducting surfaces this means that the weighting field and the actual electric field are proportional to one another (as seen above) so that:
+
+\begin{align}
+    i = \frac{qv}{r\mathrm{ln}\left(\frac{b}{a}\right)}
+\end{align}
+
+The drift velocity of an electron or hole in a semiconductor is found in solid state physics to be proportional to the electric field provided that the field is not too large i.e.:
+
+\begin{align}\label{velocity}
+    v_{e/h} = \mu_{e/h} E
+\end{align}
+
+Where $\mu$ is the electron/hole mobility: a constant of the material for our operation space. For single interaction events at a fixed radius, $r_{o}$, a total number of charges n may be generated locally near the interaction site as a result of indirect ionizations. The electrons in an n-type germanium detector will move radially inward, the holes radially outward. For the electrons (similar holds for the holes with opposite sign):
+\begin{align}
+    v_{e} &= \mu_{e} \frac{V}{r_{e}\mathrm{ln}\left(\frac{b}{a}\right)}= \frac{dr_{e}}{dt} \nonumber \\
+    \rightarrow  r^{2}_{e}(t) &= r_{o}^{2} + \frac{2\mu_{e}V}{\mathrm{ln}\left(\frac{b}{a}\right)} t \\
+    r_{e}^{2}(t) &= r_{o}^{2} \left(1 + \frac{t}{t_{o}} \right) \label{radius} \\
+    \frac{r_{e}(t)}{r_{o}} &=\left(1 + \frac{t}{t_{o}} \right)^{\frac{1}{2}} 
+\end{align}
+
+Where:
+\begin{align}
+    t_{o} = \frac{r_{o}^{2} \mathrm{ln}\left(\frac{b}{a}\right)}{2 \mu_{e} V}
+\end{align}
+
+The induced charge can be found by integrating the induced current. For electrons:
+
+\begin{align}
+    Q_{e}(t) &= \int_{0}^{t}i_{e}(t')dt' = \frac{q_{e}}{\mathrm{ln}\left(\frac{b}{a}\right)}\int_{r_{o}}^{r_{e}(t)}\frac{v_{e}}{r}\frac{dr}{v_{e}}\nonumber \\
+   &= \frac{q_{e}}{\mathrm{ln}\left(\frac{b}{a}\right)}\mathrm{ln}\left(\frac{r_{e}(t)}{r_{o}}\right) = \frac{q_{e}}{2\ \mathrm{ln}\left(\frac{b}{a}\right)}\mathrm{ln}\left(1 + \frac{t}{t_{o}}\right)
+\end{align}
+The total induced charge is just the sum of the holes and the electrons:
+
+\begin{align} \label{induced}
+     Q_{\mathrm{tot}}(t) =  \frac{ne}{2\ \mathrm{ln}\left(\frac{b}{a}\right)} \left[\mathrm{ln}\left(1 - \frac{t}{t_{o,h}}\right) + \mathrm{ln}\left(1 + \frac{t}{t_{o,e}}\right)\right]
+\end{align}
+
+Where $t_{o,e}$ is for electrons and $t_{o,h}$ is for holes. This shape assumes that there will none of either charge species is lost or trapped. There will also, in general, be a discontinuous slope change when the first of the electrons or holes arrives at their respective collecting electrodes. These collection times $T_{e,h}$ depend on $r_{o}$ from Equation \ref{collect}:
+
+\begin{equation}
+\begin{aligned} \label{times}
+  T_{h} &= \frac{(r_{o}^{2} - a^{2})}{r_{o}^2}t_{o,h} = \left(1 - \frac{a^2}{r_{o}^2} \right)t_{o,h}\\
+  T_{e} &= \frac{(b^{2} - r_{o}^{2})}{r_{o}^2}t_{e,h} = \left(\frac{b^2}{r_{o}^2}-1 \right)t_{e,h}
+\end{aligned}
+\end{equation}
+
+\subsection*{More General Case}
+
+Starting from equation \ref{eq:maxsimplified} there will be a space charge $\rho$ associated with residual donor impurities that extends all the way from radius a out to the outer radius b in a fully depleted detector. A thin layer extends there that has the same but opposite magnitude of charge and contributes negligibly to the potential from the inner to outer radius. An applied voltage V will in turn induce a surface charge $\lambda$ on the inner conductor (and $-\lambda$ on the outer conductor). Thus using Gauss's Law with a cylinder of radius r and length l:
+
+\begin{align}
+    \int \vec{E}(r) \cdot d\hat{A} &= E_{r}2\pi r l = \frac{\lambda l + \pi \rho l (r^2 - a^2)}{\varepsilon} \label{electric_field}\\
+    \rightarrow \varepsilon E_{r} &= \frac{\lambda}{2\pi r} + \frac{\rho}{2r}(r^2-a^2) \label{ewithlambda}
+\end{align}
+
+When integrating both sides from r = a to r = b, the left hand side becomes -V (reverse biased). This boundary condition fixes $\lambda$:
+
+\begin{align}
+    \int_{a}^{b} E_{r}dr &= -V = \frac{\lambda \mathrm{ln}(b/a)}{2 \pi\varepsilon} + \frac{\rho(b^2-a^2)}{4\varepsilon} - \frac{a^2}{\varepsilon}\mathrm{ln}(b/a)\\
+    \rightarrow \frac{\lambda}{2\pi\epsilon} &= -\frac{V + \frac{\rho}{4\varepsilon}(b^2-a^2)}{\mathrm{ln}(b/a)} + \frac{\rho a^2}{2\varepsilon} \label{lambdasolved}
+\end{align}
+
+Plugging equation \ref{lambdasolved} into equation \ref{ewithlambda}, noting that $\rho = -e N_{d}$ where $N_{d}$ is the donor impurity in the n-type HPGe, and taking the absolute value:
+
+\begin{align}
+    |E(r)| = \frac{e N_{d}}{2 \varepsilon} r + \frac{V-\frac{e N_{d}}{4\varepsilon}(b^2-a^2)}{r \mathrm{ln}(b/a)}
+\end{align}
+
+The induced charge can be found by following the logic of Glenn Knoll.\cite{knoll} The electric field can be recast as: 
+
+\begin{align}
+    |E(r)| &= 2\alpha r + \frac{\beta}{r} \label{e_simplified}\\
+    \alpha &= \frac{e N_{d}}{4\varepsilon} \nonumber\\
+    \beta &= \frac{V-\frac{e N_{d}}{4\varepsilon}(b^2-a^2)}{\mathrm{ln}(b/a)} \nonumber
+\end{align}
+
+Integration of the energy lost by the electrons and holes as they travel to the electrodes from an initial interaction point $r_{o}$ in turn gives a relationship for the induced charge on the collecting electrodes since the applied voltage is fixed:
+
+\begin{align}
+    Q(t) &= Q_{-}(t) + Q_{+}(t)\\
+    Q_{-}(t) &= \frac{q_o}{V} \left(\alpha (r_{o}^2 - r_e^2(t)) + \beta \left(\mathrm{ln}\frac{r_{o}}{r_{e}(t)}\right)\right)\\
+     Q_{+}(t) &= \frac{q_o}{V} \left(\alpha (r_{h}^2(t) - r_{o}^2) + \beta \left(\mathrm{ln}\frac{r_{h}(t)}{r_{o}}\right)\right)
+\end{align}
+
+Using equation \ref{velocity}, it is possible to find the collection times similar to equation \ref{times}:
+
+\begin{align}
+    v_{d} = \frac{dr_{h/e}}{dt} &= \pm \mu_{h/e} E = \pm \mu_{h/e} (2\alpha r + \frac{\beta}{r})\\
+    \rightarrow \int_{r_{o}}^{r_{h/e}(t)} \frac{dr}{2\alpha r + \frac{\beta}{r}}&= \pm \int_{0}^{t} \mu_{h/e} dt 
+\end{align}
+
+Where plus is taken for holes, minus for electrons. The radial position of holes and electrons can be solved with algebra:
+
+\begin{align}
+    r_{h}^2(t) &= \left(r_{o}^2 + \frac{\beta}{2\alpha}\right)e^{4\alpha \mu_{h} t} - \frac{\beta}{2 \alpha}\\
+    r_{e}^2(t) &= \left(r_{o}^2 + \frac{\beta}{2\alpha}\right)e^{-4\alpha \mu_{e} t} - \frac{\beta}{2 \alpha}
+\end{align}
+
+The collection times are when $r_{e}(t_c) = a$ and $r_{h}(t_c) = b$. This gives with some algebra:
+
+\begin{equation}
+\begin{aligned}\label{times_general}
+  T_{h} &= \mathrm{ln}\left(\frac{b^2 + \omega}{r_{o}^2 + \omega} \right)/(4 \alpha \mu_{h})\\
+  T_{e} &= -\mathrm{ln}\left(\frac{a^2 + \omega}{r_{o}^2 + \omega} \right)/(4 \alpha \mu_{e})\\
+  \omega &= \frac{\beta}{2\alpha} \nonumber
+\end{aligned}
+\end{equation}
+
+These equations were used to model signal shapes within the detector given the following specs of the HPGe used here as well as values in Knoll:\cite{knoll} 
+
+\begin{align}
+    a &= \frac{0.91\ \mathrm{cm}}{2}\nonumber \\
+    b &= \frac{5.23\ \mathrm{cm}}{2} \nonumber \\
+    \varepsilon &= 16\varepsilon_{o} \nonumber \\ \mu_{h}(70K) &=  3.6 \times 10^{4} \frac{\mathrm{cm^2}}{Vs} \nonumber \\
+    \mu_{e}(70K) &=  4.2 \times 10^{4} \frac{\mathrm{cm^2}}{Vs}  \nonumber \\
+   \rho &= 10^{10} \frac{\mathrm{impurities}}{\mathrm{cm}^3}
+\end{align}
+
+The value for $\rho$ is taken as a best guess.
+

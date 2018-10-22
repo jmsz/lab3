@@ -11,8 +11,8 @@ $(manuscript).pdf: $(manuscript).tex text/*.tex references.bib figures/*
 
 # Get/download necessary data
 data :
-	curl -L -o ./data/tenevents.txt "https://www.dropbox.com/s/yk9cov2q74ib9fl/tenevents.txt?dl=0"
-	curl -L -o ./data/cs_energies.txt "https://www.dropbox.com/s/yxm9lbnailhhdao/cs_energies.txt?dl=0"
+	curl -L -o ./data/risetimes_2.txt "https://www.dropbox.com/s/yk9cov2q74ib9fl/tenevents.txt?dl=0"
+	curl -L -o ./data/risetimes_3.txt "https://www.dropbox.com/s/yxm9lbnailhhdao/cs_energies.txt?dl=0"
 	curl -L -o ./data/co_energies.txt "https://www.dropbox.com/s/99cfeid7nto0k35/co_energies.txt?dl=0"
 	curl -L -o ./data/am_energies.txt "https://www.dropbox.com/s/glh5hohb924bfey/am_energies.txt?dl=0"
 # Run tests on analysis scripts
@@ -25,7 +25,8 @@ analysis :
 
 # Automate running the full analysis.
 fullanalysis :
-	python ./scripts/lab1_analysis.py
+	python ./scripts/lab2_analysis.py
+        python ./scripts/siggen.py
 
 clean :
 	rm -f *.md5 *.aux *.log *.bbl *.lof *.lot *.blg *.out *.toc *.run.xml *.bcf *.txt

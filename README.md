@@ -1,17 +1,15 @@
-# NE 204 Lab 1 ReadMe
+# NE 204 Lab 2 ReadMe
 
 This repo contains the necessary parts to perform the analysis and compile
-the write-up of Lab 1. Please use Python 2.7.
+the write-up of Lab 2.
 
+Please use Python 2.7.
 The following packages are required:
-numba, numpy, math, matplotlib, lmfit, tables, csv, time
+numpy, math, matplotlib, tables, csv
 
-Note that this does not perform the full analysis due to the inconvenience of
-downloading large data files. The data includes tenevents.txt, which contains
-digitized signals for 10 events, with a 10 ns sampling interval. The other text
-files (3 files with the names 'co_energies.txt', 'cs_energies.txt', 'am_energies.txt') contain the amplitudes of signals from much larger data sets after the application of a trapezoidal filter that was optimized for energy resolution.
+Two data files are available for downloading. These are csv files containing for each event the ADC value (determined by the SIS3302 DAQ on-board trapezoidal filter) and the rise time (t90-t10) for that pulse calculated with the calculate_rise_time function in the lab2_analysis_functions.py script. The rise time calculation in not run here to avoid the need for large amounts of data.
 
-The analysis command does all of the parts of the analysis which can be demonstrated using these smaller data sets.
+Running the analysis performs an evaluation of risetime selection cuts on the peak-to-compton ratio and peak-to-total ratio. Additionally, the sigggen.py script is run, which generates predicted signal shapes.
 
 ## How to run analysis
 
