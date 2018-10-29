@@ -1,6 +1,8 @@
 from __future__ import division, print_function
 from numba import jit
 from math import floor
+from scipy.signal import savgol_filter
+from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
 import numpy as np
 import lmfit
@@ -9,10 +11,66 @@ import sys
 import csv
 import time
 
-@jit(parallel = True)
+def calculate_signal_rise_time_interpolation(signal, plot=False):
+    signal = signal[910:1090]
+    x = np.linspace(0, 1090-910, 1090-910)
+    sig = savgol_filter(signal, 15, 3) # window size 51, polynomial order 3
+
+    maxval = np.amax(sig)
+    tenval = maxval* 0.10
+    ninetyval = maxval * 0.9
+    tenindex = 0
+    ninetyindex = 0
+
+    for i in range(0, np.argmax(sig), 1):
+        if sig[i] <= tenval:
+            tenindex = i
+    for i in range(tenindex, len(sig), 1):
+        if sig[i] >= ninetyval:
+            ninetyindex = i
+            break
+
+    x_fit_low = x[int(tenindex - 1): int(tenindex + 2)]
+    sig_fit_low = sig[int(tenindex - 1): int(tenindex + 2)]
+    m, b = np.polyfit(x_fit_low, sig_fit_low, deg=1)
+    fit_low = b + m * x_fit_low
+    rise_low = ((tenval - b )/ m)
+
+    x_fit_high = x[ninetyindex - 1 : ninetyindex + 2]
+    sig_fit_high = sig[ninetyindex - 1: ninetyindex + 2]
+    m, b = np.polyfit(x_fit_high, sig_fit_high, deg=1)
+    fit_high = b + m * x_fit_high
+    rise_high = ((ninetyval - b) / m)
+
+    risetime = (rise_high - rise_low) # ns
+
+    maxgrad = np.amax(np.gradient(sig))
+
+    print(ninetyindex - tenindex)
+    if plot==True:
+        plt.figure(figsize=(10,5))
+        plt.plot(signal, '-')
+        plt.plot(sig)
+        plt.plot(x_fit_high, fit_high,'o')
+        plt.plot(x_fit_low, fit_low,'o')
+        plt.savefig('../figures/smoothing.pdf')
+        plt.show()
+    return risetime, maxgrad
+
+
+def calculate_coefficients(calibration_channels, calibration_energies, polynomial_order):
+    return np.polyfit(calibration_channels, calibration_energies, polynomial_order)
+
+def gaussianfunction(x, h, mu, sigma):
+    return h*np.exp(-((x-mu)/sigma)**2)
+
+def calculate_energies(x, m, b):
+    energies = m * x + b
+    return energies
+
 def baseline_correction(data):
     n_data = len(data)
-    baseline_correction_value = np.mean(data[0:799])
+    baseline_correction_value = np.mean(data[0:99])
     for i in range(0, n_data, 1):
         data[i] = data[i] - baseline_correction_value
     return data
@@ -290,7 +348,7 @@ def fit_gaussian_peak_linear_background(x,y):
     fit_fwhm = (out.params['g1_fwhm'].value )
     fit_center = (out.params['g1_center'].value)
     fwhm_err = (out.params['g1_fwhm'].stderr )
-    # print(out.fit_report(min_correl=0.5))
+    print(out.fit_report(min_correl=0.5))
     #plt.figure()
     #ax = plt.gca()
     #plt.plot(x, y, 'bo')
@@ -299,5 +357,5 @@ def fit_gaussian_peak_linear_background(x,y):
     #plt.plot(x, comps['g1_'], 'b--')
     #plt.plot(x, comps['lin_'], 'g--')
     #plt.show()
-    amp = out.params['amplitude'].value
+    amp = out.params['g1_amplitude'].value
     return fit_fwhm, fit_center, fwhm_err, amp
