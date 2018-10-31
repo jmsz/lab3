@@ -49,12 +49,14 @@ def calculate_signal_rise_time_interpolation(signal, plot=False):
     print(ninetyindex - tenindex)
     if plot==True:
         plt.figure(figsize=(10,5))
+        plt.cla()
+        plt.clf()
         plt.plot(signal, '-')
         plt.plot(sig)
         plt.plot(x_fit_high, fit_high,'o')
         plt.plot(x_fit_low, fit_low,'o')
         plt.savefig('../figures/smoothing.pdf')
-        plt.show()
+        #plt.show()
     return risetime, maxgrad
 
 
@@ -348,7 +350,7 @@ def fit_gaussian_peak_linear_background(x,y):
     fit_fwhm = (out.params['g1_fwhm'].value )
     fit_center = (out.params['g1_center'].value)
     fwhm_err = (out.params['g1_fwhm'].stderr )
-    print(out.fit_report(min_correl=0.5))
+    #print(out.fit_report(min_correl=0.5))
     #plt.figure()
     #ax = plt.gca()
     #plt.plot(x, y, 'bo')

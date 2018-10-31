@@ -1,11 +1,14 @@
 \begin{figure}%
     \centering
-    \subfloat[]{{\includegraphics[width=7cm]{./figures/tenevents_rawdata.pdf} }}%
+    \subfloat[]{{\includegraphics[width=7cm]{./figures/CalibratedSpectrum.pdf }}%
     \quad
     \subfloat[]{{\includegraphics[width=7cm]{./figures/tenevents_filtered.pdf} }}%
-    \caption{In figure (a) five sample events are shown. In figure (b) are the five signals after the application of a trapezoidal filter with a gap time and peaking time of 1 $\mu$s. Signals of the same color correspond to one another. Note that the time interval on both plots in in ADC samples, which are each 10 ns apart in time.}%
-    \label{fig:signals}%
+    \caption{A CALIBRATED ENERGY SPECRUM}%
+    \label{spectrum}%
 \end{figure}
+
+
+
 
 Five signals were chosen from the ${}^{137}${Cs} data set. The raw signals are plotted in Figure \ref{fig:signals}, after a baseline correction. The resultant signals after usage of the trapezoidal filter with a gap time and peaking time of 1 $\mu$s are also plotted. The correlation between amplitudes of raw and filtered signals is apparent. Additionally, the effect of signal rise-time can be observed. The signal in purple exhibits the most ideal behavior. This signal has the fastest rise-time and most-closely resembles an ideal step function. All charge is collected quickly; none is lost. The red signal is of the same amplitude but has a longer rise time. As expected, the resultant filtered signal is less ideal, showing more curved corners and more variation in amplitude in the flat top region. These effects, if pronounced, can lead to degraded energy resolution.
 
