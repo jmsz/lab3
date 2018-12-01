@@ -329,19 +329,14 @@ def fit_exponential_with_plot(x, y):
     plt.show()
     return out.params
 
-def fit_gaussian_with_plot(x, y):
-    mod = lmfit.models.GaussianModel()
-    pars = mod.guess(y, x=x)
-    out = mod.fit(y, pars, x=x)
-    print(out.fit_report(min_correl=0.5))
-    plt.plot(x, y, 'bo')
-    plt.plot(x, out.init_fit, 'k--')
-    plt.plot(x, out.best_fit, 'r-')
-    plt.show()
-    fwhm = out.params['fwhm'].value
-    center = out.params['center'].value
-    amp = out.params['amplitude'].value
-    return fwhm, center, amp
+def get_tau_exponential(x, y):
+    tau_values = []
+    out = fit_exponential_with_plot(x, y)
+    if out['exp_decay'].value < 1e4 and out['exp_decay'].stderr < 100:
+        tau_values.append(out['exp_decay'].value)
+    tau = np.mean(tau_values)
+    return tau
+
 
 def fit_gaussian(x,y):
     mod = lmfit.models.GaussianModel()
