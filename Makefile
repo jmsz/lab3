@@ -28,7 +28,6 @@ analysis :
 fullanalysis :
 	python ./scripts/calibration.py
 	python ./scripts/timing.py
-	python ./scripts/depth.py
 
 clean :
 	rm -f *.md5 *.aux *.log *.bbl *.lof *.lot *.blg *.out *.toc *.run.xml *.bcf *.txt

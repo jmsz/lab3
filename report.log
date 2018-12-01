@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  30 NOV 2018 18:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  30 NOV 2018 20:56
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -183,11 +183,7 @@ Package caption3 Info: TeX engine: e-TeX on input line 67.
 \sf@top=\skip49
 \sf@bottom=\skip50
 )
-(./report.aux
-
-LaTeX Warning: Label `t50_2' multiply defined.
-
-)
+(./report.aux)
 \openout1 = `report.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 26.
@@ -202,7 +198,8 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 26.
 LaTeX Font Info:    ... okay on input line 26.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 26.
 LaTeX Font Info:    ... okay on input line 26.
- (/usr/local/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+
+(/usr/local/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count111
 \scratchdimen=\dimen130
@@ -316,15 +313,15 @@ LaTeX Warning: Reference `cci22' on page 1 undefined on input line 9.
 
 ) (./text/methods.tex [1
 
-{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] <./
-figures/energy_res.pdf, id=16, 433.62pt x 289.08pt>
+{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] <./figu
+res/energy_res.pdf, id=12, 433.62pt x 289.08pt>
 File: ./figures/energy_res.pdf Graphic file (type pdf)
 
 <use ./figures/energy_res.pdf>
 Package pdftex.def Info: ./figures/energy_res.pdf used on input line 23.
 (pdftex.def)             Requested size: 303.53267pt x 202.36343pt.
-
-<./figures/energy_res_long.pdf, id=17, 433.62pt x 289.08pt>
+ [2]
+<./figures/energy_res_long.pdf, id=18, 433.62pt x 289.08pt>
 File: ./figures/energy_res_long.pdf Graphic file (type pdf)
 
 <use ./figures/energy_res_long.pdf>
@@ -334,11 +331,11 @@ Package pdftex.def Info: ./figures/energy_res_long.pdf used on input line 31.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<./figures/time-to-next-event.pdf, id=18, 505.89pt x 361.35pt>
+<./figures/time-to-next-event.pdf, id=19, 505.89pt x 361.35pt>
 File: ./figures/time-to-next-event.pdf Graphic file (type pdf)
 
 <use ./figures/time-to-next-event.pdf>
-Package pdftex.def Info: ./figures/time-to-next-event.pdf used on input line 47
+Package pdftex.def Info: ./figures/time-to-next-event.pdf used on input line 45
 .
 (pdftex.def)             Requested size: 303.53267pt x 216.81168pt.
 
@@ -346,30 +343,29 @@ Package pdftex.def Info: ./figures/time-to-next-event.pdf used on input line 47
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-LaTeX Warning: Reference `knoll' on page 3 undefined on input line 53.
+LaTeX Warning: Reference `knoll' on page 3 undefined on input line 51.
 
 
-LaTeX Warning: Citation `scipy' on page 3 undefined on input line 55.
+LaTeX Warning: Citation `scipy' on page 3 undefined on input line 53.
 
 [3 <./figures/energy_res.pdf>]
 <./figures/t50_fitting.pdf, id=66, 722.7pt x 361.35pt>
 File: ./figures/t50_fitting.pdf Graphic file (type pdf)
 
 <use ./figures/t50_fitting.pdf>
-Package pdftex.def Info: ./figures/t50_fitting.pdf used on input line 59.
+Package pdftex.def Info: ./figures/t50_fitting.pdf used on input line 57.
 (pdftex.def)             Requested size: 303.53267pt x 151.76596pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-) [4 <./figures/energy_res_long.pdf>] (./text/results.tex
-<./figures/t50s_det1.pdf, id=114, 433.62pt x 289.08pt>
+) (./text/results.tex <./figures/t50s_det1.pdf, id=67, 433.62pt x 289.08pt>
 File: ./figures/t50s_det1.pdf Graphic file (type pdf)
 
 <use ./figures/t50s_det1.pdf>
 Package pdftex.def Info: ./figures/t50s_det1.pdf used on input line 5.
 (pdftex.def)             Requested size: 303.53267pt x 202.36343pt.
-
+ [4 <./figures/energy_res_long.pdf>]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
@@ -387,7 +383,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 File: ./figures/interactiondepths.pdf Graphic file (type pdf)
 
 <use ./figures/interactiondepths.pdf>
-Package pdftex.def Info: ./figures/interactiondepths.pdf used on input line 29.
+Package pdftex.def Info: ./figures/interactiondepths.pdf used on input line 27.
 
 (pdftex.def)             Requested size: 303.53267pt x 202.36343pt.
 
@@ -396,28 +392,37 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 LaTeX Warning: Reference `interactiondepths' on page 5 undefined on input line 
-35.
+33.
 
-[5 <./figures/time-to-next-event.pdf>]) (./text/discussion.tex) (./report.bbl
-[6 <./figures/t50_fitting.pdf>] [7 <./figures/t50s_det1.pdf>]
+[5 <./figures/time-to-next-event.pdf>]
+<./figures/g4_comp.pdf, id=157, 433.62pt x 289.08pt>
+File: ./figures/g4_comp.pdf Graphic file (type pdf)
+
+<use ./figures/g4_comp.pdf>
+Package pdftex.def Info: ./figures/g4_comp.pdf used on input line 43.
+(pdftex.def)             Requested size: 303.53267pt x 202.36343pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+) (./text/discussion.tex [6 <./figures/t50_fitting.pdf>]) (./report.bbl
+[7 <./figures/t50s_det1.pdf>]
 Missing character: There is no ¶ in font cmr10!
-) [8 <./figures/t50s_det2.pdf>] [9 <./figures/interactiondepths.pdf>] (./report
-.aux)
+Missing character: There is no ä in font cmti10!
+ [8 <./figures/t50s_det2.pdf>]) [9 <./figures/interactiondepths.pdf>] [10 <./fi
+gures/g4_comp.pdf>] (./report.aux)
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: There were multiply-defined labels.
-
  ) 
 Here is how much of TeX's memory you used:
- 4162 strings out of 492995
- 62027 string characters out of 6132704
- 132821 words of memory out of 5000000
- 7644 multiletter control sequences out of 15000+600000
+ 4169 strings out of 492995
+ 62153 string characters out of 6132704
+ 133802 words of memory out of 5000000
+ 7650 multiletter control sequences out of 15000+600000
  11698 words of font info for 44 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 44i,6n,42p,906b,301s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 44i,6n,42p,1275b,303s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
@@ -428,10 +433,10 @@ ocal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/loc
 al/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/
 texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/t
 exlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on report.pdf (9 pages, 215335 bytes).
+Output written on report.pdf (10 pages, 231804 bytes).
 PDF statistics:
- 337 PDF objects out of 1000 (max. 8388607)
- 94 compressed objects within 1 object stream
+ 380 PDF objects out of 1000 (max. 8388607)
+ 102 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 36 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 41 words of extra memory for PDF output out of 10000 (max. 10000000)
 
