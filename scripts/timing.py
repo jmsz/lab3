@@ -69,7 +69,7 @@ plt.ylabel('counts')
 plt.title("Time-to-Next-Event Histogram")
 plt.xlim([0, 300])
 plt.savefig("./figures/time-to-next-event.pdf")
-plt.show()
+#plt.show()
 
 
 # In[7]:
