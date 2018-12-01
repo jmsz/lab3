@@ -8,7 +8,10 @@ Please use Python 2.7.
 The following packages are required:
 numpy, math, matplotlib, tables, csv
 
-Data files are available for downloading....
+Data files are available for downloading.... but are huge, so the calibration.py file,
+though it can be run, needs 4 data files which can be provided (email jszornel@berkeley.edu).
+Currently the analysis only performs timing.py, which relies on only 2 data files.
+These are still pretty large (sorry :()
 
 ## How to run analysis
 
