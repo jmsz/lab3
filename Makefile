@@ -13,7 +13,7 @@ $(manuscript).pdf: $(manuscript).tex text/*.tex references.bib figures/*
 data :
 	curl -L -o ./data/hits.h5 "https://www.dropbox.com/s/ojq4i9fyz8f7205/hits.h5?dl=0"
 	curl -L -o ./data/calibration_long.txt "https://www.dropbox.com/s/nkbwd0iie6fp623/calibration_long.txt?dl=0"
-	curl -L -o ./data/risetimes_3.txt "https://www.dropbox.com/s/yxm9lbnailhhdao/cs_energies.txt?dl=0"
+	curl -L -o ./data/cs2.h5 "https://www.dropbox.com/s/5fl7muuiqxilg25/cs2.h5?dl=0"
 
 # Run tests on analysis scripts
 test :
