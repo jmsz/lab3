@@ -8,7 +8,7 @@ import tables
 import sys
 import csv
 import time
-from lab1_analysis_functions import *
+from lab3_analysis_functions import *
 
 def exp_func(x,a,t):
     return a*np.exp((-x/t))
@@ -47,7 +47,7 @@ def test_fast_baseline_correction():
 
 def test_array_sorting():
     arr = np.zeros((5,3))
-    print(arr)
+    #print(arr)
     arr[:,0] = [5, 4, 3, 2, 1]
     arr[:,1] = [20, 21, 27, 40, 5]
     arr[:,2] = arr[:,1]
@@ -61,8 +61,5 @@ def test_array_sorting():
     assert(arr[0][2] == -1)
 
 print('testing ...')
-test_baseline_correction()
-test_fast_baseline_correction()
-test_fitting()
 test_array_sorting()
 print('testing complete')
