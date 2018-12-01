@@ -11,6 +11,7 @@ $(manuscript).pdf: $(manuscript).tex text/*.tex references.bib figures/*
 
 # Get/download necessary data
 data :
+	curl -L -o ./data/hits.h5 "https://www.dropbox.com/s/ojq4i9fyz8f7205/hits.h5?dl=0"
 	curl -L -o ./data/risetimes_2.txt "https://www.dropbox.com/s/yk9cov2q74ib9fl/tenevents.txt?dl=0"
 	curl -L -o ./data/risetimes_3.txt "https://www.dropbox.com/s/yxm9lbnailhhdao/cs_energies.txt?dl=0"
 	curl -L -o ./data/co_energies.txt "https://www.dropbox.com/s/99cfeid7nto0k35/co_energies.txt?dl=0"
@@ -25,8 +26,9 @@ analysis :
 
 # Automate running the full analysis.
 fullanalysis :
-	python ./scripts/lab2_analysis.py
-        python ./scripts/siggen.py
+	python ./scripts/calibration.py
+	python ./scripts/timing.py
+	python ./scripts/depth.py
 
 clean :
 	rm -f *.md5 *.aux *.log *.bbl *.lof *.lot *.blg *.out *.toc *.run.xml *.bcf *.txt

@@ -45,8 +45,24 @@ def test_fast_baseline_correction():
     assert(y[200] == 0)
     assert(y[2000] == 100)
 
+def test_array_sorting():
+    arr = np.zeros((5,3))
+    print(arr)
+    arr[:,0] = [5, 4, 3, 2, 1]
+    arr[:,1] = [20, 21, 27, 40, 5]
+    arr[:,2] = arr[:,1]
+    arr[0][2] = 2
+    arr[3][2] = -1
+
+    arr = arr[np.argsort(arr[:, 2])]
+
+    assert(arr[0][0] == 2)
+    assert(arr[0][1] == 40)
+    assert(arr[0][2] == -1)
+
 print('testing ...')
 test_baseline_correction()
 test_fast_baseline_correction()
 test_fitting()
+test_array_sorting()
 print('testing complete')

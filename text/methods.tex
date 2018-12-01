@@ -1,182 +1,77 @@
-A coaxial HPGe detector was used to collect spectroscopic data from calibration sources of various energies (${}^{241}$Am, ${}^{137}$Cs, ${}^{60}$Co). In addition to a gamma source, a pulser input was simultaneously injected into the preamplifier in each measurement to provide a measure of electronic noise. 
+\subsection{Data Collection}
 
-A Struck Integrated Systems (SIS) 3302 DAQ module. This module has 16-bit ADCs and an internal 100 MHz clock which was used for all of the measurements. Preamplifier output signals were fed directly to the DAQ module without additional processing. These output signals were digitized and used to perform this analysis.
+A Struck Integrated Systems (SIS) 3302 DAQ module was used to collect data. This module has 16-bit ADCs and an internal 100 MHz clock which was used for all of the measurements. Preamplifier output signals were fed directly to the DAQ module without additional processing. These output signals were digitized and used to perform this analysis. Additionally, the on-board shaping amplifier was used to retrieve event energies (in ADC units).
 
-The trigger threshold value was set so that gamma-ray pulses of all of the energies of interest could be collected without excessive noise and without exceeding the voltage range of the DAQ. The SIS 3302 module has signal shaping capabilities. There is an on-board 'slow' trapezoidal filter that can be used to collect spectroscopic information and a 'fast' trapezoidal filter used for event triggering. 
+The trigger threshold value was set so that gamma-ray pulses with energies as low as approximately 50 keV could be collected without excessive noise and without exceeding the voltage range of the DAQ. Data was collected attempting to have negligible pile-up effects. The event rate was chosen to be approximately 800 Hz for a system with a 100 MHz clock (10 ns sampling time) and a preamplifier pulse decay time of roughly 500 ns. CHECK OLD COMMENT
 
-Data was collected in a way to ensure that pile-up effects would be negligible. The event rate was chosen to be approximately 200 Hz for a system with a 100 MHz clock (10 ns sampling time) and a preamplifier pulse decay time of roughly 500 ns,. Still, the 'fast' filter was used to reject events with more than one trigger per event. Here that corresponds to a very small fraction of events ($<1\%$). 
+Before further processing each pulse was baseline corrected. This was done by subtracting the average value of the first 15 samples from all of the samples in that pulse.
 
-Before further processing each pulse was baseline corrected. This was done by subtracting the average value of the first 800 samples (for each event, the rise of the preamplifier signal begins at approximately the 1000 th sample) of a pulse from all of the samples in that pulse.
+\subsection{Energy Calibration}
 
-Next, the raw signals were fit with exponential functions to extract the decay time constant (M). The average decay time constant for all of the ${}^{137}$Cs signals (without multiple triggers) was used as M. To first order M is the RC time constant of the preamplifier circuit. This does not depend on energy and should be the same for all measurements taken with the detector.
+Before taking spectral data, each channel must be calibrated. The 661.7 keV line from ${}^{137}$Cs and the 59.5 keV line from ${}^{241}$Am were used to perform a linear energy calibration.
 
-A digital filter was implemented following the description in Figure 5 of \cite{Jordanov}. Using the filter, spectroscopic information was extracted using variable gap and peaking times. First, a peaking time of 500 ns was set and the gap time was varied from 0 to 1000 ns. Then, using the optimal gap time, peaking time was similarly varied from 100 ns to 20 $\mu$s. Once the filter was optimized, the amplitudes of the trapezoids were used to generate spectra. A region of interest was selected around each peak by visual inspection. Then the region was fit with a Gaussian function and a linear function using the built in models in LmFit \cite{LMFIT}. The FWHM of the Gaussian was extracted and used. 
+Four calibration data sets were taken. First an ${}^{241}$Am source was placed near the outward face of detector 1. Next, the source was moved to the outward source of the detector 2. This was repeated with a ${}^{137}$Cs source. This was done to ensure that all channels would have spectral data for both sources.
 
-To optimize parameters, the 662 keV peak from $^{137}$Cs was used, since it is roughly in the center of the energy range studied. However, data from three other peaks was also examined (${}^{241}$Am 59.536 keV, ${}^{60}$Co 1173.231 keV , ${}^{60}$Co 1332.508 keV) and gave similar results for parameter optimization. Gamma energy values were taken from Table 12.1 in \cite{Knoll} .
+Two spectra were plotted for each channel, one using both ${}^{241}$Am data sets combined, and the other using both ${}^{137}$Cs data sets combined. A region of interest around each photopeak was selected by visual inspection of the relevant spectrum. These regions were each fit with a Gaussian function and a linear function (to account for background) using the built in models in LmFit \cite{LMFIT}. A linear energy calibration was used.
 
-Using the optimal parameters for $^{137}$Cs (a gap time of 550 ns and a peaking time of 11.64 $\mu$s) the energy resolution of the system as a function of gamma energy was studied.
+Channels which had fewer than 50 total counts around the ${}^{137}$Cs peak or showed other strange behavior (visually observed) in spectra were not calibrated, and were not used in any of the analysis shown. This included 22 of the 152 channels. Most of these channels correspond to strips near the edge of the detectors which have been disconnected due to high leakage currents. The two channels with the highest FWHM values had very few events in the cesium photopeak region, leading to poor fitting. Channels with a 0 FWHM are those which were not calibrated.
 
-oisson's equation in cylindrical coordinates can be written in the following way:
+The energy resolution of each channel is determined from the FWHM of the peak. This is shown in figure \ref{fwhm}. Each individual channel had a low number of counts in the photopeak ($\approx$ 60). The error bars shown correspond to fitting errors. Low statistics in the cesium peaks limited this procedure (there were roughly 60 counts for a single channel). The average energy resolution was found to be 2.44 keV., with a standard deviation of 0.51 keV. The channels with high FWHM values tend to be those with a small number of counts in the peak. The variation between channels would likely decrease with better statistics.  Using a larger cesium dataset results in a better energy calibration. This was done in \ref{fwhm_long}. The average energy resolution was found to be 2.37 keV., with a standard deviation of 0.39 keV. DETECTOR FACE SPAN U SHAPE
 
-\begin{align}\label{eq:maxwell}
-\nabla ^2\phi = \left( {\underbrace {\frac{\partial ^2\phi
-}{\partial r^2} + \frac{1}{r}\frac{\partial \phi }{\partial
-r}}_{\frac{1}{r}\frac{\partial \phi }{\partial r}\left(
-{r\frac{\partial \phi }{\partial r}} \right)} +
-\frac{1}{r^2}\frac{\partial ^2\phi }{\partial \theta ^2} +
-\frac{\partial ^2\phi }{\partial z^2}} \right) = -\frac{\rho}{\varepsilon_\mathrm{o}}
-\end{align}
+\begin{figure}[h]
+\begin{centering}
+\includegraphics[width=0.7\textwidth]{./figures/energy_res.pdf}
+\caption{The energy resolution for each channel of two double-sided strip detectors. Channels with a 0 FWHM are those which were not calibrated due to low statistics, high leakage currents, or other issues. The error bars shown correspond to fitting errors.}
+\label{fwhm}
+\end{centering}
+\end{figure}
 
-\noindent where $\phi$ is the potential and $\rho$ is the total space charge density, which will be taken as a constant. For a cylindrically symmetric configuration, the azimuthal partial derivative term can be taken as zero. For a tractable closed form solution of the electric field inside the coaxial HPGe detector, it is necessary to ignore the end cap region. The electric field flux near the corners in particular will lead to irregular pulse signals and so in this analysis will be ignored. In the regions away from the end, this allows the z term to be dropped as well. Equation \ref{eq:maxwell} now becomes:
-\begin{align}\label{eq:maxsimplified}
-\frac{\partial ^2\phi
-}{\partial r^2} + \frac{1}{r}\frac{\partial \phi }{\partial
-r} = -\frac{\rho}{\varepsilon}
-\end{align}
-\indent Since there is only an r dependence, the electric field is also only in the radial direction or E(r) = $-\partial\phi/\partial r$. This turns equation \ref{eq:maxsimplified} into the following form:
-\begin{align}
-\nabla_{r} \cdot \vec{\mathrm{E}}\mathrm{(r)} = \frac{\partial \mathrm{E(r)}
-}{\partial r} + \frac{\mathrm{E(r)}}{r} = \frac{\rho}{\varepsilon}
-\end{align}
+\begin{figure}[h]
+\begin{centering}
+\includegraphics[width=0.7\textwidth]{./figures/energy_res_long.pdf}
+\caption{The energy resolution for each channel of two double-sided strip detectors. Channels with a 0 FWHM are those which were not calibrated due to low statistics, high leakage currents, or other issues. The error bars shown correspond to fitting errors.}
+\label{fwhm_long}
+\end{centering}
+\end{figure}
 
-For a fully depleted HPGe coaxial detector with the added boundary condition that the the voltage between the inner and outer radius is the applied voltage, it can be shown that:
 
-\begin{align}
-|E(r)| &= -\frac{\rho}{2\varepsilon}r + \frac{V - V_{D}}{r \mathrm{ln}\left(\frac{b}{a}\right)}\\
-V_{D} &= \frac{\rho (b^{2} - a^{2})}{4 \varepsilon} \nonumber
-\end{align}
+\subsection{Timing}
 
-Where b is the outer radius, a is the inner radius, and $V_{D}$ is the depletion voltage.
-\subsection*{Shockley-Ramo Approximation: Ignore All Space Charge}
-Applying the Shockley-Ramo theorem \cite{ramo,Shockley}, the space charge $\rho$ is set equal to zero and the applied voltage V is set to unity. This gives for the weighting field:
+A distribution of trigger times over all events and both detectors was plotted. For a Poisson process, the distribution of arrival times is exponential, peaked at zero and falling more steeply with increasing rate (the decay constant of the exponential function is $\lambda = 1/mean rate)$. 
 
-\begin{align}
-    |E_{w}(r)| = \frac{1}{r\mathrm{ln}\left(\frac{b}{a}\right)}
-\end{align}
+The distribution for experimental triggers does not follow this trend exactly. There are more events near 0 and more events at 1 than at zero. This has to do with the fact that for each event which causes a trigger on a strip, it is very likely to see triggers on other strips (from image charges on neighboring strips, signals from the electrodes on the opposite face or in the other detector, noise, charge-sharing, etc.). It is found that most events occur within 250 nanoseconds of each other. The expected drift time for charges within a detector of this type and size is on the order of hundreds of nanoseconds. This agrees with what is observed. 
 
-The induced current on the electrodes become:
+CHANGE TIME DISTRIB TO BE IN NS
+\begin{figure}[h]
+\begin{centering}
+\includegraphics[width=0.7\textwidth]{./figures/time-to-next-event.pdf}
+\caption{The energy resolution for each channel of the DSSD CCI2. Channels with a 0 FWHM are those which were not calibrated. The error bars shown correspond to fitting errors.}
+\label{timehist}
+\end{centering}
+\end{figure}
 
-\begin{align}
-    i = q E \cdot \vec{v} = q E_{v} v
-\end{align}
+To select single-site events, events which have triggers within 400 ns of each other on opposite faces of a detector crystal were selected. This is a generous window, as we expect the drift time for charge carriers within this detector to be $\approx$100-200ns \ref{knoll}. Requiring this, along with full energy deposition, were the selection criteria for a single-site event.
 
-Where q is the charge and $E_{v}$ is the component of the electric field in the direction of the instantaneous velocity v of an electron. It is assumed that the applied potential is strong enough to make diffusion effects negligible and constrain the paths of the formed electrons and holes to radial lines. Since there are only two conducting surfaces this means that the weighting field and the actual electric field are proportional to one another (as seen above) so that:
+For an event, each of the two pulses (from the opposite faces) was smoothed using a Savitzky-Golay filter \cite{scipy}. The last point where the smoothed signal did not exceed 50 percent of its maximum value and 6 neighboring points (3 to each side) were fit with a linear function. The time that this linear function crossed 50 percent was calculated and used as $t50$. The $t50$ value of one face was subtracted from the other, to find $\Delta t50$. Here the $t50$ of the electrons was subtracted from that of the holes ($t50_{cathode}- t50_{anode}$). The difference in trigger time was added to $\Delta t50$ to find the difference in signal arrival times.
 
-\begin{align}
-    i = \frac{qv}{r\mathrm{ln}\left(\frac{b}{a}\right)}
-\end{align}
+\begin{figure}[h]
+\begin{centering}
+\includegraphics[width=0.7\textwidth]{./figures/t50_fitting.pdf}
+\caption{Each raw signal (blue) is smoothed with a Savitzky-Golay filter (orange). The region around the point at which the smoothed signal exceeds half its maximum is fit with a line (green) to extract the t50 value (red point)}
+\label{fit}
+\end{centering}
+\end{figure}
 
-The drift velocity of an electron or hole in a semiconductor is found in solid state physics to be proportional to the electric field provided that the field is not too large i.e.:
+\subsection{Depth Determination}
 
-\begin{align}\label{velocity}
-    v_{e/h} = \mu_{e/h} E
-\end{align}
+${}^{137}$Cs was used to ensure events throughout the potential range of detector depth. Additionally, these signals have greater SNR which makes it easier to properly trigger on and correlate signals.
 
-Where $\mu$ is the electron/hole mobility: a constant of the material for our operation space. For single interaction events at a fixed radius, $r_{o}$, a total number of charges n may be generated locally near the interaction site as a result of indirect ionizations. The electrons in an n-type germanium detector will move radially inward, the holes radially outward. For the electrons (similar holds for the holes with opposite sign):
-\begin{align}
-    v_{e} &= \mu_{e} \frac{V}{r_{e}\mathrm{ln}\left(\frac{b}{a}\right)}= \frac{dr_{e}}{dt} \nonumber \\
-    \rightarrow  r^{2}_{e}(t) &= r_{o}^{2} + \frac{2\mu_{e}V}{\mathrm{ln}\left(\frac{b}{a}\right)} t \\
-    r_{e}^{2}(t) &= r_{o}^{2} \left(1 + \frac{t}{t_{o}} \right) \label{radius} \\
-    \frac{r_{e}(t)}{r_{o}} &=\left(1 + \frac{t}{t_{o}} \right)^{\frac{1}{2}} 
-\end{align}
+The maximum $\Delta t50$was seen to be roughly 210, the minimum $\Delta t50$ was seen to be -160. For a rough determination of the depth, the maximum value is assumed to correspond to the anode and the minimum value to the cathode. A linear fit is applied to determine intermediate position values. This is not a fully representative treatment. It fails to take into account effects due to the non-linear weighting potential directly near electrodes, different charge carrier mobilities, realistic charge transport, and other effects. However, for the purposes of this work, we make this crude assumption following \cite{amman}.
 
-Where:
-\begin{align}
-    t_{o} = \frac{r_{o}^{2} \mathrm{ln}\left(\frac{b}{a}\right)}{2 \mu_{e} V}
-\end{align}
+A different linear interpretation was used as well. Following \cite{cci21}, assuming saturation velocity for both charge carriers, one can use a linear function to relate depth ($z$) to $\Delta t50$:
 
-The induced charge can be found by integrating the induced current. For electrons:
+EQUATION
+$z = z_0 + k \Delta t50$
 
-\begin{align}
-    Q_{e}(t) &= \int_{0}^{t}i_{e}(t')dt' = \frac{q_{e}}{\mathrm{ln}\left(\frac{b}{a}\right)}\int_{r_{o}}^{r_{e}(t)}\frac{v_{e}}{r}\frac{dr}{v_{e}}\nonumber \\
-   &= \frac{q_{e}}{\mathrm{ln}\left(\frac{b}{a}\right)}\mathrm{ln}\left(\frac{r_{e}(t)}{r_{o}}\right) = \frac{q_{e}}{2\ \mathrm{ln}\left(\frac{b}{a}\right)}\mathrm{ln}\left(1 + \frac{t}{t_{o}}\right)
-\end{align}
-The total induced charge is just the sum of the holes and the electrons:
-
-\begin{align} \label{induced}
-     Q_{\mathrm{tot}}(t) =  \frac{ne}{2\ \mathrm{ln}\left(\frac{b}{a}\right)} \left[\mathrm{ln}\left(1 - \frac{t}{t_{o,h}}\right) + \mathrm{ln}\left(1 + \frac{t}{t_{o,e}}\right)\right]
-\end{align}
-
-Where $t_{o,e}$ is for electrons and $t_{o,h}$ is for holes. This shape assumes that there will none of either charge species is lost or trapped. There will also, in general, be a discontinuous slope change when the first of the electrons or holes arrives at their respective collecting electrodes. These collection times $T_{e,h}$ depend on $r_{o}$ from Equation \ref{collect}:
-
-\begin{equation}
-\begin{aligned} \label{times}
-  T_{h} &= \frac{(r_{o}^{2} - a^{2})}{r_{o}^2}t_{o,h} = \left(1 - \frac{a^2}{r_{o}^2} \right)t_{o,h}\\
-  T_{e} &= \frac{(b^{2} - r_{o}^{2})}{r_{o}^2}t_{e,h} = \left(\frac{b^2}{r_{o}^2}-1 \right)t_{e,h}
-\end{aligned}
-\end{equation}
-
-\subsection*{More General Case}
-
-Starting from equation \ref{eq:maxsimplified} there will be a space charge $\rho$ associated with residual donor impurities that extends all the way from radius a out to the outer radius b in a fully depleted detector. A thin layer extends there that has the same but opposite magnitude of charge and contributes negligibly to the potential from the inner to outer radius. An applied voltage V will in turn induce a surface charge $\lambda$ on the inner conductor (and $-\lambda$ on the outer conductor). Thus using Gauss's Law with a cylinder of radius r and length l:
-
-\begin{align}
-    \int \vec{E}(r) \cdot d\hat{A} &= E_{r}2\pi r l = \frac{\lambda l + \pi \rho l (r^2 - a^2)}{\varepsilon} \label{electric_field}\\
-    \rightarrow \varepsilon E_{r} &= \frac{\lambda}{2\pi r} + \frac{\rho}{2r}(r^2-a^2) \label{ewithlambda}
-\end{align}
-
-When integrating both sides from r = a to r = b, the left hand side becomes -V (reverse biased). This boundary condition fixes $\lambda$:
-
-\begin{align}
-    \int_{a}^{b} E_{r}dr &= -V = \frac{\lambda \mathrm{ln}(b/a)}{2 \pi\varepsilon} + \frac{\rho(b^2-a^2)}{4\varepsilon} - \frac{a^2}{\varepsilon}\mathrm{ln}(b/a)\\
-    \rightarrow \frac{\lambda}{2\pi\epsilon} &= -\frac{V + \frac{\rho}{4\varepsilon}(b^2-a^2)}{\mathrm{ln}(b/a)} + \frac{\rho a^2}{2\varepsilon} \label{lambdasolved}
-\end{align}
-
-Plugging equation \ref{lambdasolved} into equation \ref{ewithlambda}, noting that $\rho = -e N_{d}$ where $N_{d}$ is the donor impurity in the n-type HPGe, and taking the absolute value:
-
-\begin{align}
-    |E(r)| = \frac{e N_{d}}{2 \varepsilon} r + \frac{V-\frac{e N_{d}}{4\varepsilon}(b^2-a^2)}{r \mathrm{ln}(b/a)}
-\end{align}
-
-The induced charge can be found by following the logic of Glenn Knoll.\cite{knoll} The electric field can be recast as: 
-
-\begin{align}
-    |E(r)| &= 2\alpha r + \frac{\beta}{r} \label{e_simplified}\\
-    \alpha &= \frac{e N_{d}}{4\varepsilon} \nonumber\\
-    \beta &= \frac{V-\frac{e N_{d}}{4\varepsilon}(b^2-a^2)}{\mathrm{ln}(b/a)} \nonumber
-\end{align}
-
-Integration of the energy lost by the electrons and holes as they travel to the electrodes from an initial interaction point $r_{o}$ in turn gives a relationship for the induced charge on the collecting electrodes since the applied voltage is fixed:
-
-\begin{align}
-    Q(t) &= Q_{-}(t) + Q_{+}(t)\\
-    Q_{-}(t) &= \frac{q_o}{V} \left(\alpha (r_{o}^2 - r_e^2(t)) + \beta \left(\mathrm{ln}\frac{r_{o}}{r_{e}(t)}\right)\right)\\
-     Q_{+}(t) &= \frac{q_o}{V} \left(\alpha (r_{h}^2(t) - r_{o}^2) + \beta \left(\mathrm{ln}\frac{r_{h}(t)}{r_{o}}\right)\right)
-\end{align}
-
-Using equation \ref{velocity}, it is possible to find the collection times similar to equation \ref{times}:
-
-\begin{align}
-    v_{d} = \frac{dr_{h/e}}{dt} &= \pm \mu_{h/e} E = \pm \mu_{h/e} (2\alpha r + \frac{\beta}{r})\\
-    \rightarrow \int_{r_{o}}^{r_{h/e}(t)} \frac{dr}{2\alpha r + \frac{\beta}{r}}&= \pm \int_{0}^{t} \mu_{h/e} dt 
-\end{align}
-
-Where plus is taken for holes, minus for electrons. The radial position of holes and electrons can be solved with algebra:
-
-\begin{align}
-    r_{h}^2(t) &= \left(r_{o}^2 + \frac{\beta}{2\alpha}\right)e^{4\alpha \mu_{h} t} - \frac{\beta}{2 \alpha}\\
-    r_{e}^2(t) &= \left(r_{o}^2 + \frac{\beta}{2\alpha}\right)e^{-4\alpha \mu_{e} t} - \frac{\beta}{2 \alpha}
-\end{align}
-
-The collection times are when $r_{e}(t_c) = a$ and $r_{h}(t_c) = b$. This gives with some algebra:
-
-\begin{equation}
-\begin{aligned}\label{times_general}
-  T_{h} &= \mathrm{ln}\left(\frac{b^2 + \omega}{r_{o}^2 + \omega} \right)/(4 \alpha \mu_{h})\\
-  T_{e} &= -\mathrm{ln}\left(\frac{a^2 + \omega}{r_{o}^2 + \omega} \right)/(4 \alpha \mu_{e})\\
-  \omega &= \frac{\beta}{2\alpha} \nonumber
-\end{aligned}
-\end{equation}
-
-These equations were used to model signal shapes within the detector given the following specs of the HPGe used here as well as values in Knoll:\cite{knoll} 
-
-\begin{align}
-    a &= \frac{0.91\ \mathrm{cm}}{2}\nonumber \\
-    b &= \frac{5.23\ \mathrm{cm}}{2} \nonumber \\
-    \varepsilon &= 16\varepsilon_{o} \nonumber \\ \mu_{h}(70K) &=  3.6 \times 10^{4} \frac{\mathrm{cm^2}}{Vs} \nonumber \\
-    \mu_{e}(70K) &=  4.2 \times 10^{4} \frac{\mathrm{cm^2}}{Vs}  \nonumber \\
-   \rho &= 10^{10} \frac{\mathrm{impurities}}{\mathrm{cm}^3}
-\end{align}
-
-The value for $\rho$ is taken as a best guess.
+where z is the depth of the interaction, $z_0$ is a constant depth which is slightly offset from the midpoint of the detector to account for differences in electron and hole velocities, and $k$ is a proportionality factor. $z_0$ and $k$ were experimentally determined for detector 1 to be 5.2 mm and 0.04 mm/ns respectively, in \cite{cci21}. This offset of 5.2 mm was adjusted to 5.95 mm to better fit the data set.
 

@@ -1,5 +1,17 @@
-An overestimate of the statistical noise would lead to a low Fano factor value, as was seen in this study. Since we only subtract a measured value of electronic noise, there could be other noise in our system (potentially from charge loss in the detector) which is not accounted for, leading to this discrepancy. We could measure charge loss in our system by inputing a pulse of known charge and voltage through the detector we could determine detector capacitance. The discrepancy in measured charge from a pulse input to the detector and a pulse input to the preamplifier could possibly provide a measure for charge loss.
+Timing information was extracted and 
 
-Many improvements could be made to the current implementation of the trapezoidal filter and to the system. For each signal the amplitude was extracted by taking the maximum value of the trapezoidal signal. This is not the best approach and may introduce some error. Due to the presence of noise in the flat-top, the extracted amplitudes will likely be biased towards higher values. Additionally, using this method, it is more important to have a good correction for the exponential decay. If the flat-top of the signal is sloped, as happens with an incorrect time constant value, the correct amplitudes will be biased. Depending on the amount of noise in the system, sampling rate, gap time, and pole-zero correction quality it may be desirable to implement a better strategy. Other strategies that could be implemented include: sampling at the midpoint of the filter or averaging a few samples in the flat-top. Additionally, a measure of the flatness of the flat-top could be used as a measure of event quality.
+which method was best
 
-The peak fitting could be improved to deal with more complex shapes. The simple linear background assumption does not work well for all of the peaks of interest (particularly in the case of  ${}^{241}$Am). Additionally, at very short rise and gap times, peaks do not always resemble Gaussians and could be better represented with skewed Gaussians or other shapes. Additionally, looking at metrics other than the FWHM (such as the FWHM/ FW.1M ratio) could give additional info on ballistic deficit.
+\subsection{Summary}
+
+
+\subsection{Future Work}
+
+There are many potential improvements and future steps that could be taken. The spread in signal trigger time will be investigated, as it may have an effect of the $\Delta t50$ values calculated. 
+
+-better than just a linear fit
+-lateral position
+-finer grid
+-collimation for verification
+
+The difference in trigger time is determined by a on-board fast trapezoidal shaper. The trigger time may differ slightly between signals, leading to additional uncertainty. The effect of this jitter >>?? will need to be studied for more precise position determination.
