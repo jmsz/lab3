@@ -1,8 +1,8 @@
+#!/usr/bin/env python -W ignore::DeprecationWarning RuntimeWarning
 from lab3_analysis_functions import *
+from __future__ import division
 
 # In[2]:
-
-
 filename = './data/cs2.h5'
 hf = tables.open_file(filename, "r")
 raw_data_1 = import_data(filename)
@@ -86,8 +86,8 @@ intercepts = calibration[:,1]
 for i in range(0, 152, 1):
     mask = (event_data_cs1['detector'] == i)
     event_data_cs1['ADC_value'][mask] = calculate_energies(event_data_cs1['ADC_value'][mask], slopes[i], intercepts[i])
-    if i == 90:
-        print('still going... almost done')
+    #if i == 90:
+        #print('still going... almost done')
     if i == 151:
         print('phew! done with that part')
 
@@ -104,6 +104,7 @@ plt.clf()
 plt.plot(bins, counts)
 plt.savefig('./figures/energy-spectrum.pdf')
 #plt.show()
+print('an energy spectrum of the Cs-137 peak has been plotted in energy-spectrum.pdf')
 
 
 mask_1 = ((660 < event_data_cs1['ADC_value']) & (event_data_cs1['ADC_value'] < 663))
@@ -249,7 +250,7 @@ for t in range(0, len(event_data_cs1['timestamp'][mask_1]), 1):
     diff1 = np.abs(event_data_cs1['timestamp'][mask_1][t] - event_data_cs1['timestamp'][mask_1][t-2])
     # diff2 = np.abs(event_data_cs1['timestamp'][mask_1][t+1] - event_data_cs1['timestamp'][mask_1][t])
     # diff3 = np.abs(event_data_cs1['timestamp'][mask_1][t+2] - event_data_cs1['timestamp'][mask_1][t])
-    if diff0 < 50 and diff1 > 50:
+    if diff0 < 7 and diff1 > 7:
         # print('0', diff0)
         # print('1', diff1)
         # print('2', diff2)

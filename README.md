@@ -4,14 +4,28 @@ This repo contains the necessary parts to perform the analysis and compile
 the write-up of my NE204 final project, based around Lab 5 and focusing on
 determining interaction depth in an HPGe double-sided strip detector.
 
+The depth of interaction will be extracted for single energy deposition events
+in a few different ways. Running the analysis included here will use a linear
+fit to determine the interaction depths. However, the library method- whereby
+signals are compared with a library of simulated signals- is excluded
+(commented out) due only to the fact that the process is very slow (each raw
+signal is compared to each library signal, which includes a time-alignment step
+where the signal shifted in time to find the best fit. This is all quite slow).
+
+One sample signal is evaluated, purely for demonstration.
+
+
 Please use Python 2.7.
 The following packages are required:
-numpy, math, matplotlib, tables, csv
+numpy, math, matplotlib, tables, csv, lmfit, numba, scipy, time
 
-Data files are available for downloading.... but are huge, so the calibration.py file,
-though it can be run, needs 4 data files which can be provided (email jszornel@berkeley.edu).
-Currently the analysis only performs timing.py, which relies on only 2 data files.
-These are still pretty large (sorry :()
+Data files are available for downloading.... but are quite large...
+
+The calibration.py file, though it can be run, requires 4 data files which are not
+included but can be provided (email jszornel@berkeley.edu).
+
+Currently the analysis only performs timing.py, which relies on only 1 data file
+which is still pretty large, sorry :(
 
 ## How to run analysis
 

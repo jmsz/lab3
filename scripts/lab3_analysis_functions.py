@@ -3,9 +3,13 @@ from numba import jit
 from math import floor
 from scipy.signal import savgol_filter
 from scipy.optimize import curve_fit
+from lmfit import Model, CompositeModel
+import lmfit
+from lmfit.lineshapes import step, gaussian
+from operator import truediv
 import matplotlib.pyplot as plt
 import numpy as np
-import lmfit
+#import lmfit
 import tables
 import sys
 import csv
@@ -494,7 +498,7 @@ def fit_gaussian_peak_linear_background_wide(x,y):
     amp = out.params['g1_amplitude'].value
     return fit_fwhm, fit_center, fwhm_err, amp
 
-def fit_gaussian_peak_linear_background(x,y):
+def fit_gaussian_peak_linear_background(x,y,plot=False):
     peak_amplitude = max(y)
     peak_centroid = x[np.argmax(y)]
     peak_sigma = 1
@@ -516,22 +520,19 @@ def fit_gaussian_peak_linear_background(x,y):
     fit_fwhm = (out.params['g1_fwhm'].value )
     fit_center = (out.params['g1_center'].value)
     fwhm_err = (out.params['g1_fwhm'].stderr )
-    #print(out.fit_report(min_correl=0.5))
-    #plt.figure()
-    #ax = plt.gca()
-    #plt.plot(x, y, 'bo')
-    #plt.plot(x, out.init_fit, 'k--')
-    #plt.plot(x, out.best_fit, 'r-')
-    #plt.plot(x, comps['g1_'], 'b--')
-    #plt.plot(x, comps['lin_'], 'g--')
-    #plt.show()
+
+    if plot==True:
+        print(out.fit_report(min_correl=0.5))
+        plt.figure()
+        ax = plt.gca()
+        plt.plot(x, y, 'bo')
+        plt.plot(x, out.init_fit, 'k--')
+        plt.plot(x, out.best_fit, 'r-')
+        plt.plot(x, comps['g1_'], 'b--')
+        plt.plot(x, comps['lin_'], 'g--')
+        plt.show()
     amp = out.params['g1_amplitude'].value
     return fit_fwhm, fit_center, fwhm_err, amp
-
-
-
-from lmfit import Model, CompositeModel
-from lmfit.lineshapes import step, gaussian
 
 def fit_gaussian_peak_step_background(x,y):
     peak_amplitude = max(y)
@@ -628,3 +629,18 @@ def fit_gaussian_peak_step_background_2(x,y):
     # #<end examples/model_doc3.py>
 
     return fit_fwhm, fit_center, fwhm_err
+
+def make_test_file(masked_data, rawdata):
+    f = open('test.csv', 'w')
+    for i in event_data_cs1[mask_1]:
+        #print(i)
+        f.write(str(i[0]) +','+ str(i[1]) + ','+str(i[2]) + ','+ str(i[3]) + ','+ str(i[4]) + ','+ str(i[5]) + ','+ str(i[6]) + '\n')
+    f.close()
+
+    f = open('test_trace.csv', 'w')
+    for i in event_data_cs1['rid'][mask_1]:
+        x = rawdata[i]
+        for j in x:
+            f.write(str(j) + ' ')
+        f.write('\n')
+    f.close()

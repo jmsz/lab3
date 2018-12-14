@@ -1,14 +1,8 @@
-\subsection*{Timing}
+\subsection*{Timing
+Plotted is the distribution of $\Delta t50$ for both detectors. The source was located on the DC side of detector1. Events close to this face correspond to the most negative values of $\Delta t50$. We expect to see an exponential fall-off of events as depth increases from this point. There is some exponential trend, however, at the opposite side of the detector IT RISES UP AGAIN.
 
-\begin{figure}
-\begin{centering}
-\includegraphics[width=0.7\textwidth]{./figures/t50s_det1.pdf}
-\caption{The $\Delta t50$ distribution for detector 1.}
-\label{t50_1}
-\end{centering}
-\end{figure}
+One downside to the linear fit, is that although the $\Delta$T50 changed linearly as a function of depth over most of the bulk, this is not true near the contacts. This can be seen in figure \ref{t50depth}. This leads to errors in estimating depths near the contacts. According to \cite{amman}, a common issue is that events in this region are reconstructed to have depths closer to the contacts than they did in actuality. This may explain the upticks in events at the edges of the crystals seen in figure \ref{t50_2}. 
 
-Plotted is the distribution of $\Delta t50$ for both detectors. The source was located on the DC side of detector1. Events close to this face correspond to the most negative values of $\Delta t50$. We expect to see an exponential fall-off of events as depth increases from this point. There is some exponential trend, however, at the opposite side of the detector 
 
 \begin{figure}
 \begin{centering}
@@ -30,13 +24,13 @@ The trigger time of a signal is determined by a on-board fast trapezoidal shaper
 \end{centering}
 \end{figure}
 
-The depth profile for detector 1 is shown in \ref{interactiondepths}. The second method of calculating depth, which takes into account the different carrier velocities, seems to give a better result. More events are confined within the detector and the depth profile looks to have a more apparent exponential trend.
+The depth profile for detector 1 is shown in figure \ref{interactiondepths}. The second method of calculating depth, which takes into account the different carrier velocities, seems to give a better result. More events are confined within the detector and the depth profile looks to have a more apparent exponential trend.
 
 Another source of error is scattering events. A gamma ray may scatter in an event with full-energy deposition (forward Compton scattering within a voxel for example), and the assumption of a single scattering event where there were two or more interactions will lead to an improperly reconstructed interaction position. This is another source of error in our measurement.
 
 \subsection*{Comparison to Simulation}
 
-A simple model was built in GEANT4 (two planar HPGe crystals, 74 mm wide, 15 mm thick, 10 mm apart). No surrounding material was included in the model. A point source emitting gamma-rays with energy 661.657 keV from a point 2 meters in front of the front-face of the first detector was used \cite{ebss}. This data was used to compare to the experimentally determined distribution of interaction depths. In \ref{g4} the z positions from single interactions in the single data are plotted alongside the reconstructed z positions from \ref{g4}. There is reasonable agreement between the two, although the reconstructed depths have an excess of events on the AC face of detector 1. Signals from events near the DC face are more likely to experience effects from charge trapping, due to poorer transport of holes. This could explain some of the discrepancy.
+A simple model was built in GEANT4 (two planar HPGe crystals, 74 mm wide, 15 mm thick, 10 mm apart). No surrounding material was included in the model. A point source emitting gamma-rays with energy 661.657 keV from a point 2 meters in front of the front-face of the first detector was used \cite{ebss}. This data was used to compare to the experimentally determined distribution of interaction depths. In figure \ref{g4} the z positions from single interactions in the single data are plotted alongside the reconstructed z positions from figure \ref{g4}. There is reasonable agreement between the two, although the reconstructed depths have an excess of events on the AC face of detector 1. Signals from events near the DC face are more likely to experience effects from charge trapping, due to poorer transport of holes. This could explain some of the discrepancy.
 
 \begin{figure}
 \begin{centering}

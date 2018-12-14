@@ -2,8 +2,16 @@
 
 There are many potential improvements and future steps that could be taken. The spread in signal trigger time will be investigated, as it may have an effect of the $\Delta t50$ values calculated. Additionally, many channels which were ignored in this work could be calibrated with more data and more careful fitting of each individual channel.
 
-More sophisticated pulse shape analysis methods could be applied to achieve better position determination. Utilizing a more complex function (such as the inverse sigmoid function shown in \cite{cci21}, would likely give better results. A typical pulse shape analysis technique in experiments like GRETINA is to model fields in the detector, generate a library of expected signals, and by comparing to these signals and interpolating, determine interaction positions. This technique will be compared to the simple linear method used here, to evaluate its advantages. A model of the detector and a signal library (for depth information only) has been built with  ADL3 \cite{adl3}. Using the GEANT4 data discussed earlier, interactions could be simulated at realistic positions. The resultant signals could be treated as experimental data to compare against the reference signals and check how useful this library approach is at determining interaction positions.
+More sophisticated pulse shape analysis methods could be applied to achieve better position determination. Utilizing a more complex function (such as the inverse sigmoid function shown in \cite{cci21}, would likely give better results. 
+??????
+A typical pulse shape analysis technique in experiments like GRETINA is to model fields in the detector, generate a library of expected signals, and by comparing to these signals and interpolating, determine interaction positions. This technique will be compared to the simple linear method used here, to evaluate its advantages. 
+?????????
+ A model of the detector and a signal library (for depth information only) has been built with  ADL3 \cite{adl3}. Using the GEANT4 data discussed earlier, interactions could be simulated at realistic positions. The resultant signals could be treated as experimental data to compare against the reference signals and check how useful this library approach is at determining interaction positions.
 
 Here we have focused only on the depth of interaction. The lateral position can be determined through simple methods like taking the ratio of image charges on neighboring strips to the collecting electrode, or through more complex methods like the signal library method described above. Here, the lateral position determination proved difficult due to the worse SNR of image charge signals, the high number of uncalibrated channels, and suspected cross-talk. However, through more careful event selection, lateral position determination methods could be studied.
 
 Lastly, using collimation to acquire events are specific locations would provide a verification and comparison of these methods.
+
+MACHINE LEANRING
+
+MULTI SITE EVENT FILTERING (RISE TIME OF SHAPE)

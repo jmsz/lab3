@@ -21,6 +21,7 @@ test :
 
 # Automate running the full analysis.
 analysis :
+	python ./calculateWindow.py
 	python ./scripts/timing.py
 
 clean :
